@@ -37,6 +37,17 @@ class Trace
     }
 
     /**
+     * Normalizes trace items
+     */
+    public function normalize()
+    {
+        foreach ($this->items as &$item) {
+            $item = \array_replace($this->normalItem, $item);
+        }
+        unset($item);
+    }
+
+    /**
      * Magic get
      *
      * @param string $key
@@ -99,6 +110,19 @@ class Trace
         $this->items = $instance->items;
         $this->originalItems = $instance->originalItems;
     }
+
+    /**
+     * @var array
+     */
+    protected $normalItem = [
+        'function' => null,
+        'line' => null,
+        'file' => null,
+        'class' => null,
+        'object' => null,
+        'type' => null,
+        'args' => [],
+    ];
 
     /**
      * @var array

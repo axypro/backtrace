@@ -65,6 +65,41 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::normalize
+     */
+    public function testNormalize()
+    {
+        $items = [
+            ['function' => 'preg_replace_callback',],
+            ['file' => '/test/package.php', 'line' => 10,],
+        ];
+        $expected = [
+            [
+                'function' => 'preg_replace_callback',
+                'line' => null,
+                'file' => null,
+                'class' => null,
+                'object' => null,
+                'type' => null,
+                'args' => [],
+            ],
+            [
+                'function' => null,
+                'line' => 10,
+                'file' => '/test/package.php',
+                'class' => null,
+                'object' => null,
+                'type' => null,
+                'args' => [],
+            ],
+        ];
+        $trace = new Trace($items);
+        $trace->normalize();
+        $this->assertEquals($expected, $trace->items);
+        $this->assertEquals($items, $trace->originalItems);
+    }
+
+    /**
      * @covers ::__isset
      */
     public function testMagicIsset()
