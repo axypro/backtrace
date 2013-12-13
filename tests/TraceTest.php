@@ -100,6 +100,37 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::truncateByLimit
+     */
+    public function testTruncateByLimit()
+    {
+        $items = [
+            ['function' => 'preg_replace_callback',],
+            ['file' => '/test/package.php', 'line' => 10,],
+            ['function' => 'preg_replace_callback',],
+        ];
+        $trace = new Trace($items);
+        $this->assertFalse($trace->truncateByLimit(5));
+        $this->assertEquals($items, $trace->items);
+        $this->assertFalse($trace->truncateByLimit(3));
+        $this->assertEquals($items, $trace->items);
+        $this->assertTrue($trace->truncateByLimit(2));
+        $expected2 = [
+            ['function' => 'preg_replace_callback',],
+            ['file' => '/test/package.php', 'line' => 10,],
+        ];
+        $this->assertEquals($expected2, $trace->items);
+        $this->assertFalse($trace->truncateByLimit(2));
+        $this->assertEquals($expected2, $trace->items);
+        $this->assertTrue($trace->truncateByLimit(1));
+        $expected1 = [
+            ['function' => 'preg_replace_callback',],
+        ];
+        $this->assertEquals($expected1, $trace->items);
+        $this->assertEquals($items, $trace->originalItems);
+    }
+
+    /**
      * @covers ::__isset
      */
     public function testMagicIsset()

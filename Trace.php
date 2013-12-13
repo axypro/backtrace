@@ -48,6 +48,20 @@ class Trace
     }
 
     /**
+     * Truncates the trace by a limit
+     *
+     * @param int $limit
+     */
+    public function truncateByLimit($limit)
+    {
+        if (\count($this->items) <= $limit) {
+            return false;
+        }
+        $this->items = \array_slice($this->items, 0, $limit);
+        return true;
+    }
+
+    /**
      * Magic get
      *
      * @param string $key
