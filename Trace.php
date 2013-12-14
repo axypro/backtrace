@@ -8,7 +8,7 @@ namespace axy\backtrace;
 /**
  * The class of a calling trace
  *
- * @author Grigoriev Oleg <go.vasac@gmail.com>
+ * @author Oleg Grigoriev <go.vasac@gmail.com>
  * @property-read array $items
  * @property-read array $originalItems
  */
