@@ -189,4 +189,24 @@ class TraceTest extends \PHPUnit_Framework_TestCase
         $trace = new Trace($items);
         $this->assertEquals($items, \iterator_to_array($trace));
     }
+
+    /**
+     * @covers ::offsetExists
+     * @covers ::offsetGet
+     */
+    public function testArrayAccess()
+    {
+        $items = [
+            ['file' => 'one.php'],
+            ['file' => 'two.php'],
+            ['file' => 'three.php'],
+        ];
+        $trace = new Trace($items);
+        $this->assertEquals(['file' => 'one.php'], $trace[0]);
+        $this->assertEquals(['file' => 'three.php'], $trace[2]);
+        $this->assertTrue(isset($trace[1]));
+        $this->assertFalse(isset($trace[10]));
+        $this->setExpectedException('OutOfRangeException');
+        return $trace[10];
+    }
 }

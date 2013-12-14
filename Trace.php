@@ -12,7 +12,7 @@ namespace axy\backtrace;
  * @property-read array $items
  * @property-read array $originalItems
  */
-class Trace implements \Countable, \IteratorAggregate
+class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
 {
     /**
      * Constructor
@@ -132,6 +132,57 @@ class Trace implements \Countable, \IteratorAggregate
     public function getIterator()
     {
         return new \ArrayIterator($this->items);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param mixed $offset
+     * @return boolean
+     */
+    public function offsetExists($offset)
+    {
+        return isset($this->items[$offset]);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param mixed $offset
+     * @return mixed
+     * @throws \OutOfRangeException
+     */
+    public function offsetGet($offset)
+    {
+        if (!isset($this->items[$offset])) {
+            throw new \OutOfRangeException('Trace['.$offset.'] is not found');
+        }
+        return $this->items[$offset];
+    }
+
+    /**
+     * {@inheritdoc}
+     * Forbidden
+     *
+     * @param mixed $offset
+     * @param mixed $value
+     * @throws \LogicException
+     */
+    public function offsetSet($offset, $value)
+    {
+        throw new \LogicException('Trace is read-only');
+    }
+
+    /**
+     * {@inheritdoc}
+     * Forbidden
+     *
+     * @param mixed $offset
+     * @throws \LogicException
+     */
+    public function offsetUnset($offset)
+    {
+        throw new \LogicException('Trace is read-only');
     }
 
     /**
