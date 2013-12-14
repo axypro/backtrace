@@ -159,4 +159,20 @@ class TraceTest extends \PHPUnit_Framework_TestCase
         $trace = new Trace([]);
         unset($trace->items);
     }
+
+    /**
+     * @covers ::count
+     */
+    public function testCountable()
+    {
+        $items = [
+            ['file' => 'one.php'],
+            ['file' => 'two.php'],
+            ['file' => 'three.php'],
+        ];
+        $trace = new Trace($items);
+        $this->assertCount(3, $trace);
+        $trace->truncateByLimit(1);
+        $this->assertCount(1, $trace);
+    }
 }

@@ -12,7 +12,7 @@ namespace axy\backtrace;
  * @property-read array $items
  * @property-read array $originalItems
  */
-class Trace
+class Trace implements \Countable
 {
     /**
      * Constructor
@@ -112,6 +112,16 @@ class Trace
     public function __unset($key)
     {
         throw new \LogicException('Trace is read-only');
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return \count($this->items);
     }
 
     /**
