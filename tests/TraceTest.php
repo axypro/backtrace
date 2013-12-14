@@ -175,4 +175,18 @@ class TraceTest extends \PHPUnit_Framework_TestCase
         $trace->truncateByLimit(1);
         $this->assertCount(1, $trace);
     }
+
+    /**
+     * @covers ::getIterator
+     */
+    public function testTraversable()
+    {
+        $items = [
+            ['file' => 'one.php'],
+            ['file' => 'two.php'],
+            ['file' => 'three.php'],
+        ];
+        $trace = new Trace($items);
+        $this->assertEquals($items, \iterator_to_array($trace));
+    }
 }

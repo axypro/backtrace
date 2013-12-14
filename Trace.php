@@ -12,7 +12,7 @@ namespace axy\backtrace;
  * @property-read array $items
  * @property-read array $originalItems
  */
-class Trace implements \Countable
+class Trace implements \Countable, \IteratorAggregate
 {
     /**
      * Constructor
@@ -122,6 +122,16 @@ class Trace implements \Countable
     public function count()
     {
         return \count($this->items);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return \Traversable
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->items);
     }
 
     /**
