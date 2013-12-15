@@ -14,7 +14,6 @@ namespace axy\backtrace;
  */
 class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
 {
-
     const FILTER_SKIP = false;
     const FILTER_LEAVE = 1;
     const FILTER_LEFT = 2;
