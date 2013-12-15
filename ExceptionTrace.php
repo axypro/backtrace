@@ -23,7 +23,7 @@ class ExceptionTrace extends Trace
      * @param string $file
      * @param int $line
      */
-    public function __construct($items = null, $file = null, $line = null)
+    public function __construct(array $items = null, $file = null, $line = null)
     {
         parent::__construct($items);
         if ($file === null) {

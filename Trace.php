@@ -22,22 +22,16 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      * Constructor
      *
      * @param mixed $items [optional]
-     *        a trace array, a trace instance or NULL (a current trace)
+     *        a trace array or NULL (a current trace)
      */
-    public function __construct($items = null)
+    public function __construct(array $items = null)
     {
         if ($items === null) {
             $items = \debug_backtrace();
             \array_shift($items);
         }
-        if (\is_array($items)) {
-            $this->items = $items;
-            $this->originalItems = $items;
-        } elseif ($items instanceof self) {
-            $this->cloneProperties($items);
-        } else {
-            throw new \InvalidArgumentException('Trace constructor allow array, Trace of NULL');
-        }
+        $this->items = $items;
+        $this->originalItems = $items;
     }
 
     /**
@@ -342,17 +336,6 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
             }
         }
         return self::FILTER_SKIP;
-    }
-
-    /**
-     * Cloning properties
-     *
-     * @param \axy\backtrace\Trace $instance
-     */
-    protected function cloneProperties(Trace $instance)
-    {
-        $this->items = $instance->items;
-        $this->originalItems = $instance->originalItems;
     }
 
     /**

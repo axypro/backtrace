@@ -39,32 +39,6 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::__construct
-     * @covers ::__get
-     */
-    public function testConstructByTraceInstance()
-    {
-        $items = [
-            ['file' => '/test/index.php',],
-            ['file' => '/test/package.php', 'line' => 10,],
-        ];
-        $trace1 = new Trace($items);
-        $trace2 = new Trace($trace1);
-        $this->assertNotSame($trace1, $trace2);
-        $this->assertEquals($trace1->items, $trace2->items);
-        $this->assertEquals($trace1->originalItems, $trace2->originalItems);
-    }
-
-    /**
-     * @covers ::__construct
-     * @expectedException \InvalidArgumentException
-     */
-    public function testConstructByInvalidArgumet()
-    {
-        return new Trace(5);
-    }
-
-    /**
      * @covers ::normalize
      */
     public function testNormalize()
