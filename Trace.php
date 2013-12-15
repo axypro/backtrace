@@ -39,7 +39,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Normalizes trace items
      */
-    public function normalize()
+    final public function normalize()
     {
         foreach ($this->items as &$item) {
             $item = \array_replace($this->normalItem, $item);
@@ -52,7 +52,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      *
      * @param int $limit
      */
-    public function truncateByLimit($limit)
+    final public function truncateByLimit($limit)
     {
         if (\count($this->items) <= $limit) {
             return false;
@@ -98,7 +98,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param mixed $value
      * @throws \LogicException
      */
-    public function __set($key, $value)
+    final public function __set($key, $value)
     {
         throw new \LogicException('Trace is read-only');
     }
@@ -109,7 +109,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param string $key
      * @throws \LogicException
      */
-    public function __unset($key)
+    final public function __unset($key)
     {
         throw new \LogicException('Trace is read-only');
     }
@@ -119,7 +119,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      *
      * @return int
      */
-    public function count()
+    final public function count()
     {
         return \count($this->items);
     }
@@ -129,7 +129,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      *
      * @return \Traversable
      */
-    public function getIterator()
+    final public function getIterator()
     {
         return new \ArrayIterator($this->items);
     }
@@ -140,7 +140,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param mixed $offset
      * @return boolean
      */
-    public function offsetExists($offset)
+    final public function offsetExists($offset)
     {
         return isset($this->items[$offset]);
     }
@@ -152,7 +152,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      * @return mixed
      * @throws \OutOfRangeException
      */
-    public function offsetGet($offset)
+    final public function offsetGet($offset)
     {
         if (!isset($this->items[$offset])) {
             throw new \OutOfRangeException('Trace['.$offset.'] is not found');
@@ -168,7 +168,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param mixed $value
      * @throws \LogicException
      */
-    public function offsetSet($offset, $value)
+    final public function offsetSet($offset, $value)
     {
         throw new \LogicException('Trace is read-only');
     }
@@ -180,7 +180,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param mixed $offset
      * @throws \LogicException
      */
-    public function offsetUnset($offset)
+    final public function offsetUnset($offset)
     {
         throw new \LogicException('Trace is read-only');
     }
@@ -190,7 +190,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      *
      * @return string
      */
-    public function __toString()
+    final public function __toString()
     {
         return helpers\Repr::trace($this->items);
     }

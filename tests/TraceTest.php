@@ -218,7 +218,6 @@ class TraceTest extends \PHPUnit_Framework_TestCase
         $items = [
             ['function' => 'preg_replace_callback'],
             ['file' => 'index.php', 'line' => 5, 'function' => 'func', 'args' => [1]],
-
         ];
         $expected = '#0 [internal function]: preg_replace_callback()'.\PHP_EOL.
             '#1 index.php(5): func(1)'.\PHP_EOL.
