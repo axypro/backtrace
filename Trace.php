@@ -186,6 +186,16 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return helpers\Repr::trace($this->items);
+    }
+
+    /**
      * Cloning properties
      *
      * @param \axy\backtrace\Trace $instance
