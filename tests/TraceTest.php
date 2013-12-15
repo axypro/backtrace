@@ -131,6 +131,232 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::truncate
+     * @covers ::truncateByFilter
+     */
+    public function testTruncateByFilterLeft()
+    {
+        $trace = $this->getTraceForTruncate();
+        $filter = function (array $item) {
+            if ($item['function'] === 'get') {
+                return Trace::FILTER_LEFT;
+            }
+            return Trace::FILTER_SKIP;
+        };
+        $expected = [
+            [
+                'file' => '/test/index.php',
+                'line' => 15,
+                'function' => 'func',
+            ],
+        ];
+        $this->assertTrue($trace->truncateByFilter($filter));
+        $this->assertEquals($expected, $trace->items);
+        $this->assertFalse($trace->truncateByFilter($filter));
+        $this->assertEquals($expected, $trace->items);
+        $this->assertEquals($this->itemsForTruncate, $trace->originalItems);
+    }
+
+    /**
+     * @covers ::truncate
+     * @covers ::truncateByFilter
+     */
+    public function testTruncateByFilterLeave()
+    {
+        $trace = $this->getTraceForTruncate();
+        $filter = function (array $item) {
+            if ($item['function'] === 'get') {
+                return Trace::FILTER_LEAVE;
+            }
+            return Trace::FILTER_SKIP;
+        };
+        $expected = [
+            [
+                'file' => '/test/index.php',
+                'line' => 20,
+                'function' => 'get',
+                'class' => 'test\TestClass',
+            ],
+            [
+                'file' => '/test/index.php',
+                'line' => 15,
+                'function' => 'func',
+            ],
+        ];
+        $this->assertTrue($trace->truncateByFilter($filter));
+        $this->assertEquals($expected, $trace->items);
+        $this->assertTrue($trace->truncateByFilter($filter));
+        $this->assertEquals($expected, $trace->items);
+    }
+
+    /**
+     * @covers ::truncate
+     * @covers ::truncateByFilter
+     */
+    public function testTruncateByFilterLeaveTop()
+    {
+        $trace = $this->getTraceForTruncate();
+        $filter = function (array $item) {
+            if ($item['function'] === 'placeholderClb') {
+                return Trace::FILTER_LEAVE;
+            }
+            return Trace::FILTER_SKIP;
+        };
+        $this->assertTrue($trace->truncateByFilter($filter));
+        $this->assertEquals($this->itemsForTruncate, $trace->items);
+    }
+
+    /**
+     * @covers ::truncate
+     * @covers ::truncateByFilter
+     */
+    public function testTruncateByFilterSkip()
+    {
+        $trace = $this->getTraceForTruncate();
+        $filter = function (array $item) {
+            return Trace::FILTER_SKIP;
+        };
+        $this->assertFalse($trace->truncateByFilter($filter));
+        $this->assertEquals($this->itemsForTruncate, $trace->items);
+    }
+
+    /**
+     * @covers ::truncate
+     * @covers ::truncateByNamespace
+     */
+    public function testTruncateByNamespace()
+    {
+        $trace = $this->getTraceForTruncate();
+        $this->assertFalse($trace->truncateByNamespace('go\Unk'));
+        $this->assertTrue($trace->truncateByNamespace('go\DB'));
+        $this->assertEquals($this->itemsForTruncate, $trace->originalItems);
+        $expected = [
+            [
+                'file' => '/test/TestClass.php',
+                'line' => 15,
+                'function' => 'query',
+                'class' => 'go\DB\DB',
+            ],
+            [
+                'file' => '/test/TestClass.php',
+                'line' => 10,
+                'function' => 'calc',
+                'class' => 'test\TestClass',
+            ],
+            [
+                'file' => '/test/index.php',
+                'line' => 20,
+                'function' => 'get',
+                'class' => 'test\TestClass',
+            ],
+            [
+                'file' => '/test/index.php',
+                'line' => 15,
+                'function' => 'func',
+            ],
+        ];
+        $this->assertEquals($expected, $trace->items);
+        $this->assertTrue($trace->truncateByNamespace('go\DB'));
+        $this->assertEquals($expected, $trace->items);
+    }
+
+    /**
+     * @covers ::truncate
+     * @covers ::truncateByClass
+     */
+    public function testTruncateByClass()
+    {
+        $trace = $this->getTraceForTruncate();
+        $this->assertTrue($trace->truncateByClass('go\DB\DB'));
+        $expected = [
+            [
+                'file' => '/test/TestClass.php',
+                'line' => 15,
+                'function' => 'query',
+                'class' => 'go\DB\DB',
+            ],
+            [
+                'file' => '/test/TestClass.php',
+                'line' => 10,
+                'function' => 'calc',
+                'class' => 'test\TestClass',
+            ],
+            [
+                'file' => '/test/index.php',
+                'line' => 20,
+                'function' => 'get',
+                'class' => 'test\TestClass',
+            ],
+            [
+                'file' => '/test/index.php',
+                'line' => 15,
+                'function' => 'func',
+            ],
+        ];
+        $this->assertEquals($expected, $trace->items);
+    }
+
+    /**
+     * @covert ::truncate
+     * @covers ::truncateByFile
+     */
+    public function testTruncateByFile()
+    {
+        $trace = $this->getTraceForTruncate();
+        $this->assertTrue($trace->truncateByFile('/test/TestClass.php'));
+        $expected = [
+            [
+                'file' => '/test/index.php',
+                'line' => 20,
+                'function' => 'get',
+                'class' => 'test\TestClass',
+            ],
+            [
+                'file' => '/test/index.php',
+                'line' => 15,
+                'function' => 'func',
+            ],
+        ];
+        $this->assertEquals($expected, $trace->items);
+    }
+
+    /**
+     * @covers ::truncate
+     * @covers ::truncateByDir
+     */
+    public function testTruncateByDir()
+    {
+        $trace = $this->getTraceForTruncate();
+        $this->assertTrue($trace->truncateByDir('/test/go/DB'));
+        $expected = [
+            [
+                'file' => '/test/TestClass.php',
+                'line' => 15,
+                'function' => 'query',
+                'class' => 'go\DB\DB',
+            ],
+            [
+                'file' => '/test/TestClass.php',
+                'line' => 10,
+                'function' => 'calc',
+                'class' => 'test\TestClass',
+            ],
+            [
+                'file' => '/test/index.php',
+                'line' => 20,
+                'function' => 'get',
+                'class' => 'test\TestClass',
+            ],
+            [
+                'file' => '/test/index.php',
+                'line' => 15,
+                'function' => 'func',
+            ],
+        ];
+        $this->assertEquals($expected, $trace->items);
+    }
+
+    /**
      * @covers ::__isset
      */
     public function testMagicIsset()
@@ -225,4 +451,20 @@ class TraceTest extends \PHPUnit_Framework_TestCase
         $trace = new Trace($items);
         $this->assertSame($expected, ''.$trace);
     }
+
+    /**
+     * @return \axy\backtrace\Trace
+     */
+    private function getTraceForTruncate()
+    {
+        if (!$this->itemsForTruncate) {
+            $this->itemsForTruncate = include(__DIR__.'/traceForTruncate.php');
+        }
+        return new Trace($this->itemsForTruncate);
+    }
+
+    /**
+     * @var array
+     */
+    private $itemsForTruncate;
 }

@@ -14,6 +14,11 @@ namespace axy\backtrace;
  */
 class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
 {
+
+    const FILTER_SKIP = false;
+    const FILTER_LEAVE = 1;
+    const FILTER_LEFT = 2;
+
     /**
      * Constructor
      *
@@ -59,6 +64,92 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
         }
         $this->items = \array_slice($this->items, 0, $limit);
         return true;
+    }
+
+    /**
+     * Truncate the trace by a options
+     *
+     * The options list:
+     * "filter"
+     * "namespace"
+     * "class"
+     * "file"
+     * "dir"
+     *
+     * @param array $options
+     * @return boolean
+     */
+    public function truncate(array $options)
+    {
+        $options = \array_replace($this->normalOptions, $options);
+        $nitems = [];
+        foreach (\array_reverse($this->items) as $item) {
+            $f = $this->filterItem($item, $options);
+            if ($f) {
+                if ($f !== self::FILTER_LEFT) {
+                    $nitems[] = $item;
+                }
+                $this->items = \array_reverse($nitems);
+                return true;
+            }
+            $nitems[] = $item;
+        }
+        return false;
+    }
+
+    /**
+     * Truncate the trace by a filter
+     *
+     * @param callable $filter
+     * @return boolean
+     */
+    final public function truncateByFilter($filter)
+    {
+        return $this->truncate(['filter' => $filter]);
+    }
+
+    /**
+     * Truncate the trace by a namespace
+     *
+     * @param string $namespace
+     * @return boolean
+     */
+    final public function truncateByNamespace($namespace)
+    {
+        return $this->truncate(['namespace' => $namespace]);
+    }
+
+    /**
+     * Truncate the trace by a class
+     *
+     * @param string $class
+     * @return boolean
+     */
+    final public function truncateByClass($class)
+    {
+        return $this->truncate(['class' => $class]);
+    }
+
+    /**
+     * Truncate the trace by a file
+     *
+     * @param string $file
+     * @return boolean
+     */
+    final public function truncateByFile($file)
+    {
+        return $this->truncate(['file' => $file]);
+    }
+
+    /**
+     * Truncate the trace by a dir
+     *
+     * @param string $dir
+     * @return boolean
+     */
+    final public function truncateByDir($dir)
+    {
+        return $this->truncate(['dir' => $dir]);
     }
 
     /**
@@ -196,6 +287,45 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * @param array $item
+     * @return mixed
+     */
+    protected function filterItem(array $item, array $options)
+    {
+        if ($options['filter']) {
+            $f = \call_user_func($options['filter'], $item);
+            if ($f) {
+                return $f;
+            }
+        }
+        if (!empty($item['class'])) {
+            if ($options['namespace']) {
+                if (\strpos($item['class'], $options['namespace'].'\\') === 0) {
+                    return self::FILTER_LEAVE;
+                }
+            }
+            if ($options['class']) {
+                if ($item['class'] === $options['class']) {
+                    return self::FILTER_LEAVE;
+                }
+            }
+        }
+        if (!empty($item['file'])) {
+            if ($options['dir']) {
+                if (\strpos($item['file'], $options['dir']) === 0) {
+                    return self::FILTER_LEFT;
+                }
+            }
+            if ($options['file']) {
+                if ($item['file'] === $options['file']) {
+                    return self::FILTER_LEFT;
+                }
+            }
+        }
+        return self::FILTER_SKIP;
+    }
+
+    /**
      * Cloning properties
      *
      * @param \axy\backtrace\Trace $instance
@@ -217,6 +347,17 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
         'object' => null,
         'type' => null,
         'args' => [],
+    ];
+
+    /**
+     * @var array
+     */
+    protected $normalOptions = [
+        'filter' => null,
+        'namespace' => null,
+        'class' => null,
+        'file' => null,
+        'dir' => null,
     ];
 
     /**
