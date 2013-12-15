@@ -67,6 +67,26 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * Trim a file name by a dirname
+     *
+     * @param string $prefix
+     * @return boolean
+     */
+    public function trimFilename($prefix)
+    {
+        $affected = false;
+        $len = \strlen($prefix);
+        foreach ($this->items as &$item) {
+            if ((!empty($item['file'])) && (\strpos($item['file'], $prefix) === 0)) {
+                $item['file'] = \substr($item['file'], $len);
+                $affected = true;
+            }
+        }
+        unset($item);
+        return $affected;
+    }
+
+    /**
      * Truncate the trace by a options
      *
      * The options list:

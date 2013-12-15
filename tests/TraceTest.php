@@ -131,6 +131,31 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::trimFilename
+     */
+    public function testTrimFilename()
+    {
+        $items = [
+            ['file' => '/var/www/file.php', 'line' => 10,],
+            ['function' => 'eval',],
+            ['file' => '/var/www/folder/f.php', 'line' => 20,],
+            ['file' => '/var/share/index.php', 'line' => 30,],
+        ];
+        $expected = [
+            ['file' => 'file.php', 'line' => 10,],
+            ['function' => 'eval',],
+            ['file' => 'folder/f.php', 'line' => 20,],
+            ['file' => '/var/share/index.php', 'line' => 30,],
+        ];
+        $trace = new Trace($items);
+        $this->assertTrue($trace->trimFilename('/var/www/'));
+        $this->assertEquals($expected, $trace->items);
+        $this->assertFalse($trace->trimFilename('/var/www/'));
+        $this->assertEquals($expected, $trace->items);
+        $this->assertEquals($items, $trace->originalItems);
+    }
+
+    /**
      * @covers ::truncate
      * @covers ::truncateByFilter
      */
