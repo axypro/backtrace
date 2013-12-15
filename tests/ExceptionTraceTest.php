@@ -54,4 +54,27 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($trace->originalLine));
         $this->assertFalse(isset($trace->unknown));
     }
+
+    /**
+     * @covers ::trimFilename
+     */
+    public function testTrimFilename()
+    {
+        $items = [
+            ['file' => '/var/www/file.php', 'line' => 10,],
+            ['file' => '/var/share/index.php', 'line' => 30,],
+        ];
+        $expected = [
+            ['file' => 'file.php', 'line' => 10,],
+            ['file' => '/var/share/index.php', 'line' => 30,],
+        ];
+        $trace = new ExceptionTrace($items, '/var/www/exc/e.php', 28);
+        $this->assertTrue($trace->trimFilename('/var/www/'));
+        $this->assertEquals($expected, $trace->items);
+        $this->assertSame('exc/e.php', $trace->file);
+        $this->assertTrue($trace->trimFilename('exc/'));
+        $this->assertEquals($expected, $trace->items);
+        $this->assertSame('e.php', $trace->file);
+        $this->assertFalse($trace->trimFilename('exc/'));
+    }
 }

@@ -39,6 +39,22 @@ class ExceptionTrace extends Trace
     /**
      * {@inheritdoc}
      *
+     * @param string $prefix
+     * @return boolean
+     */
+    public function trimFilename($prefix)
+    {
+        $affected = parent::trimFilename($prefix);
+        if (\strpos($this->file, $prefix) === 0) {
+            $this->file = \substr($this->file, \strlen($prefix));
+            $affected = true;
+        }
+        return $affected;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @param string $key
      * @return mixed
      * @throws \LogicException
