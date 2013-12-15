@@ -55,6 +55,34 @@ class ExceptionTrace extends Trace
     /**
      * {@inheritdoc}
      *
+     * @param array $options
+     * @return boolean
+     */
+    public function truncate(array $options)
+    {
+        $trunc = parent::truncate($options);
+        if (!$trunc) {
+            if (!empty($options['file'])) {
+                if ($options['file'] === $this->file) {
+                    $trunc = true;
+                }
+            }
+            if (!empty($options['dir'])) {
+                if (\strpos($this->file, $options['dir']) === 0) {
+                    $trunc = true;
+                }
+            }
+        }
+        if ($trunc) {
+            $this->file = empty($this->items[0]['file']) ? '' : $this->items[0]['file'];
+            $this->line = empty($this->items[0]['line']) ? 0 : $this->items[0]['line'];
+        }
+        return $trunc;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @param string $key
      * @return mixed
      * @throws \LogicException
