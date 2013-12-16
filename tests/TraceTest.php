@@ -34,7 +34,9 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     public function testConstructByNull()
     {
         $trace = new Trace();
-        $this->assertEquals(\debug_backtrace(), $trace->items);
+        $current = \debug_backtrace();
+        $this->assertCount(\count($current), $trace->items);
+        $this->assertEquals($current[0], $trace->items[0]);
         $this->assertEquals($trace->items, $trace->originalItems);
     }
 

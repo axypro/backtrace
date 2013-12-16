@@ -25,10 +25,22 @@ class ExceptionTrace extends Trace
      */
     public function __construct(array $items = null, $file = null, $line = null)
     {
+        if ($items === null) {
+            $items = \debug_backtrace();
+            $top = \array_shift($items);
+            if (($file === null) && (!empty($top['file']))) {
+                $file = $top['file'];
+            }
+            if (($line === null) && (!empty($top['line']))) {
+                $line = $top['line'];
+            }
+        }
         parent::__construct($items);
-        if ($file === null) {
-            $file = !empty($this->items[0]['file']) ? $this->items[0]['file'] : null;
-            $line = !empty($this->items[0]['line']) ? $this->items[0]['line'] : null;
+        if (($file === null) && (isset($items[0]))) {
+            $file = $items[0]['file'];
+        }
+        if (($line === null) && (isset($items[0]))) {
+            $line = $items[0]['line'];
         }
         $this->file = $file;
         $this->line = $line;

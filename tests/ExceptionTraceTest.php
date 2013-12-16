@@ -6,6 +6,7 @@
 namespace axy\backtrace\tests;
 
 use axy\backtrace\ExceptionTrace;
+use axy\backtrace\tests\hlp\GetExceptionTrace;
 
 /**
  * @coversDefaultClass axy\backtrace\ExceptionTrace
@@ -35,12 +36,30 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
      * @covers ::__construct
      * @covers ::__get
      */
-    public function testConstructCurrentFile()
+    public function testConstructNull()
     {
-        $line = __LINE__ + 1;
-        $trace = new ExceptionTrace();
-        $this->assertSame(__FILE__, $trace->file);
-        $this->assertSame($line, $trace->line);
+        $t = new GetExceptionTrace();
+        $trace = $t->trace;
+        $this->assertCount(\count($t->native), $trace->items);
+        $this->assertEquals($t->native[0], $trace->items[0]);
+        $this->assertSame($t->file, $trace->file);
+        $this->assertSame($t->line, $trace->line);
+    }
+
+    /**
+     * @covers ::__construct
+     * @covers ::__get
+     */
+    public function testConstructFileNull()
+    {
+        $items = [
+            ['file' => 'file.php', 'line' => 10,],
+            ['file' => 'index.php', 'line' => 1,],
+        ];
+        $trace = new ExceptionTrace($items);
+        $this->assertEquals($items, $trace->items);
+        $this->assertSame('file.php', $trace->file);
+        $this->assertSame(10, $trace->line);
     }
 
     /**
