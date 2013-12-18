@@ -438,7 +438,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::toString
+     * @covers ::__toString
      */
     public function testToString()
     {
