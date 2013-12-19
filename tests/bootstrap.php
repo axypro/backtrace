@@ -4,6 +4,6 @@
  * @author Oleg Grigoriev <go.vasac@gmail.com>
  */
 
-namespace axy\backtrace\test;
+namespace axy\backtrace\tests;
 
 require(__DIR__.'/../index.php');
