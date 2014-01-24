@@ -9,13 +9,33 @@ namespace axy\backtrace;
  * The class of a calling trace
  *
  * @author Oleg Grigoriev <go.vasac@gmail.com>
+ *
  * @property-read array $items
+ *                the current state of the backtrace
  * @property-read array $originalItems
+ *                the original state of the backtrace
  */
 class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
 {
+    /**
+     * The filter result: do not truncate
+     *
+     * @var mixed
+     */
     const FILTER_SKIP = false;
+
+    /**
+     * The filter result: truncate, but leave this item
+     *
+     * @var int
+     */
     const FILTER_LEAVE = 1;
+
+    /**
+     * The filter result: truncate together with this item
+     *
+     * @var int
+     */
     const FILTER_LEFT = 2;
 
     /**
@@ -30,8 +50,10 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
             $items = \debug_backtrace();
             \array_shift($items);
         }
-        $this->items = $items;
-        $this->originalItems = $items;
+        $this->props = [
+            'items' => $items,
+            'originalItems' => $items,
+        ];
     }
 
     /**
@@ -39,8 +61,8 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     final public function normalize()
     {
-        foreach ($this->items as &$item) {
-            $item = \array_replace($this->normalItem, $item);
+        foreach ($this->props['items'] as &$item) {
+            $item = \array_replace($this->defaultItem, $item);
         }
         unset($item);
     }
@@ -52,10 +74,10 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     final public function truncateByLimit($limit)
     {
-        if (\count($this->items) <= $limit) {
+        if (\count($this->props['items']) <= $limit) {
             return false;
         }
-        $this->items = \array_slice($this->items, 0, $limit);
+        $this->props['items'] = \array_slice($this->props['items'], 0, $limit);
         return true;
     }
 
@@ -69,7 +91,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     {
         $affected = false;
         $len = \strlen($prefix);
-        foreach ($this->items as &$item) {
+        foreach ($this->props['items'] as &$item) {
             if ((!empty($item['file'])) && (\strpos($item['file'], $prefix) === 0)) {
                 $item['file'] = \substr($item['file'], $len);
                 $affected = true;
@@ -82,27 +104,22 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Truncate the trace by a options
      *
-     * The options list:
-     * "filter"
-     * "namespace"
-     * "class"
-     * "file"
-     * "dir"
-     *
      * @param array $options
+     *        the options (see $defaultOptions for list)
      * @return boolean
+     *         point of truncate was found
      */
     public function truncate(array $options)
     {
-        $options = \array_replace($this->normalOptions, $options);
+        $options = \array_replace($this->defaultOptions, $options);
         $nitems = [];
-        foreach (\array_reverse($this->items) as $item) {
+        foreach (\array_reverse($this->props['items']) as $item) {
             $f = $this->filterItem($item, $options);
             if ($f) {
                 if ($f !== self::FILTER_LEFT) {
                     $nitems[] = $item;
                 }
-                $this->items = \array_reverse($nitems);
+                $this->props['items'] = \array_reverse($nitems);
                 return true;
             }
             $nitems[] = $item;
@@ -173,15 +190,12 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      * @throw \LogicException
      *        a key is not found in the Trace
      */
-    public function __get($key)
+    final public function __get($key)
     {
-        switch ($key) {
-            case 'items':
-                return $this->items;
-            case 'originalItems':
-                return $this->originalItems;
+        if (!\array_key_exists($key, $this->props)) {
+            throw new \LogicException('A field "'.$key.'" is not found in a Trace');
         }
-        throw new \LogicException('A field "'.$key.'" is not found in a Trace');
+        return $this->props[$key];
     }
 
     /**
@@ -190,9 +204,9 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      * @param string $key
      * @return boolean
      */
-    public function __isset($key)
+    final public function __isset($key)
     {
-        return \in_array($key, ['items', 'originalItems']);
+        return \array_key_exists($key, $this->props);
     }
 
     /**
@@ -220,56 +234,42 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
 
     /**
      * {@inheritdoc}
-     *
-     * @return int
      */
     final public function count()
     {
-        return \count($this->items);
+        return \count($this->props['items']);
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @return \Traversable
      */
     final public function getIterator()
     {
-        return new \ArrayIterator($this->items);
+        return new \ArrayIterator($this->props['items']);
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @param mixed $offset
-     * @return boolean
      */
     final public function offsetExists($offset)
     {
-        return isset($this->items[$offset]);
+        return isset($this->props['items'][$offset]);
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @param mixed $offset
-     * @return mixed
-     * @throws \OutOfRangeException
      */
     final public function offsetGet($offset)
     {
-        if (!isset($this->items[$offset])) {
+        if (!isset($this->props['items'][$offset])) {
             throw new \OutOfRangeException('Trace['.$offset.'] is not found');
         }
-        return $this->items[$offset];
+        return $this->props['items'][$offset];
     }
 
     /**
      * {@inheritdoc}
      * Forbidden
-     *
-     * @param mixed $offset
-     * @param mixed $value
      * @throws \LogicException
      */
     final public function offsetSet($offset, $value)
@@ -280,8 +280,6 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * {@inheritdoc}
      * Forbidden
-     *
-     * @param mixed $offset
      * @throws \LogicException
      */
     final public function offsetUnset($offset)
@@ -291,17 +289,19 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
 
     /**
      * {@inheritdoc}
-     *
-     * @return string
      */
     final public function __toString()
     {
-        return helpers\Repr::trace($this->items);
+        return helpers\Repr::trace($this->props['items']);
     }
 
     /**
+     * Check a backtrace item for truncate
+     *
      * @param array $item
+     *        an item of the backtrace
      * @return mixed
+     *         result as FILTER_* constant
      */
     protected function filterItem(array $item, array $options)
     {
@@ -339,9 +339,11 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * The list of all fields of a trace item (with default values)
+     *
      * @var array
      */
-    protected $normalItem = [
+    protected $defaultItem = [
         'function' => null,
         'line' => null,
         'file' => null,
@@ -352,9 +354,11 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     ];
 
     /**
+     * The list of default options for truncate()
+     *
      * @var array
      */
-    protected $normalOptions = [
+    protected $defaultOptions = [
         'filter' => null,
         'namespace' => null,
         'class' => null,
@@ -363,12 +367,16 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     ];
 
     /**
+     * The current state of the backtrace
+     *
      * @var array
      */
     protected $items;
 
     /**
+     * The list of magic properties
+     *
      * @var array
      */
-    private $originalItems;
+    protected $props = [];
 }

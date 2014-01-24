@@ -5,7 +5,8 @@
     "keywords": [
         "Backtrace",
         "Trace",
-        "Exception"
+        "Exception",
+        "Debug"
     ],
     "homepage": "https://github.com/axypro/backtrace",
     "license": "MIT",

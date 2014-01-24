@@ -6,16 +6,21 @@
 namespace axy\backtrace\helpers;
 
 /**
- * The trace representation as a string
+ * Representation of a backtrace as a string
  *
  * @author Oleg Grigoriev <go.vasac@gmail.com>
  */
 class Repr
 {
+    /**
+     * The maximum length of a method argument
+     *
+     * @var int
+     */
     const MAXLEN = 15;
 
     /**
-     * Represents a argument of a method as a string
+     * Represents an argument of a method as a string
      *
      * @param mixed $value
      * @return string
@@ -42,7 +47,6 @@ class Repr
      * Represents a method call as a string
      *
      * @param array $item
-     *        a trace item
      * @return string
      */
     public static function method(array $item)
@@ -50,20 +54,19 @@ class Repr
         if (empty($item['function'])) {
             return '';
         }
-        $result = $item['function'];
+        $method = $item['function'];
         if (!empty($item['class'])) {
-            $result = $item['class'].(empty($item['type']) ? '->' : $item['type']).$result;
-        }
-        if (!empty($item['args'])) {
-            $args = [];
-            foreach ($item['args'] as $arg) {
-                $args[] = self::arg($arg);
-            }
-            $result .= '('.\implode(', ', $args).')';
+            $type = (empty($item['type']) ? '->' : $item['type']);
+            $class = $item['class'].$type;
         } else {
-            $result .= '()';
+            $class = '';
         }
-        return $result;
+        $args = isset($item['args']) ? $item['args'] : [];
+        foreach ($args as &$arg) {
+            $arg = self::arg($arg);
+        }
+        unset($arg);
+        return $class.$method.'('.\implode(', ', $args).')';
     }
 
     /**
@@ -75,19 +78,21 @@ class Repr
     public static function point(array $item)
     {
         if (empty($item['file'])) {
-            return '[internal function]';
-        }
-        if (empty($item['line'])) {
-            return $item['file'];
+            $result = '[internal function]';
         } else {
-            return $item['file'].'('.$item['line'].')';
+            $result = $item['file'];
+            if (!empty($item['line'])) {
+                $result .= '('.$item['line'].')';
+            }
         }
+        return $result;
     }
 
     /**
      * Represents a trace item as a string
      *
      * @param array $item
+     *        a backtrace item
      * @param int $number [optional]
      *        a number of the item in the trace
      * @return string
@@ -128,7 +133,7 @@ class Repr
     private static function cutString($str)
     {
         static $mb;
-        if (!$mb) {
+        if ($mb === null) {
             $mb = \function_exists('mb_strlen');
         }
         if ($mb) {

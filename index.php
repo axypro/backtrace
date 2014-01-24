@@ -3,7 +3,6 @@
  * Tracing in php
  *
  * @package axy\backtrace
- * @version 0.0.1
  * @author Oleg Grigoriev <go.vasac@gmail.com>
  * @license https://raw.github.com/axypro/backtrace/master/LICENSE MIT
  * @link https://github.com/axypro/backtrace repository

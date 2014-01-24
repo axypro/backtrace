@@ -9,19 +9,27 @@ namespace axy\backtrace;
  * The class of an exception trace
  *
  * @author Oleg Grigoriev <go.vasac@gmail.com>
+ *
  * @property-read string $file
+ *                the current state of the point filename
  * @property-read int $line
+ *                the current state of the point code line
  * @property-read string $originalFile
+ *                the original state of the point filename
  * @property-read int $originalLine
+ *                the original state of the point code line
  */
 class ExceptionTrace extends Trace
 {
     /**
      * Constructor
      *
-     * @param mixed $items
-     * @param string $file
-     * @param int $line
+     * @param mixed $items [optional]
+     *        a trace array or NULL (a current trace)
+     * @param string $file [optional]
+     *        a filename of the exception point
+     * @param int $line [optional]
+     *        a code line of the exception point
      */
     public function __construct(array $items = null, $file = null, $line = null)
     {
@@ -42,23 +50,23 @@ class ExceptionTrace extends Trace
         if (($line === null) && (isset($items[0]))) {
             $line = $items[0]['line'];
         }
-        $this->file = $file;
-        $this->line = $line;
-        $this->originalFile = $file;
-        $this->originalLine = $line;
+        $nprops = [
+            'file' => $file,
+            'line' => $line,
+            'originalFile' => $file,
+            'originalLine' => $line,
+        ];
+        $this->props = \array_replace($this->props, $nprops);
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @param string $prefix
-     * @return boolean
      */
     public function trimFilename($prefix)
     {
         $affected = parent::trimFilename($prefix);
-        if (\strpos($this->file, $prefix) === 0) {
-            $this->file = \substr($this->file, \strlen($prefix));
+        if (\strpos($this->props['file'], $prefix) === 0) {
+            $this->props['file'] = \substr($this->props['file'], \strlen($prefix));
             $affected = true;
         }
         return $affected;
@@ -66,85 +74,27 @@ class ExceptionTrace extends Trace
 
     /**
      * {@inheritdoc}
-     *
-     * @param array $options
-     * @return boolean
      */
     public function truncate(array $options)
     {
         $trunc = parent::truncate($options);
         if (!$trunc) {
             if (!empty($options['file'])) {
-                if ($options['file'] === $this->file) {
+                if ($options['file'] === $this->props['file']) {
                     $trunc = true;
                 }
             }
             if (!empty($options['dir'])) {
-                if (\strpos($this->file, $options['dir']) === 0) {
+                if (\strpos($this->props['file'], $options['dir']) === 0) {
                     $trunc = true;
                 }
             }
         }
         if ($trunc) {
-            $this->file = empty($this->items[0]['file']) ? '' : $this->items[0]['file'];
-            $this->line = empty($this->items[0]['line']) ? 0 : $this->items[0]['line'];
+            $items = $this->props['items'];
+            $this->props['file'] = empty($items[0]['file']) ? '' : $items[0]['file'];
+            $this->props['line'] = empty($items[0]['line']) ? 0 : $items[0]['line'];
         }
         return $trunc;
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param string $key
-     * @return mixed
-     * @throws \LogicException
-     */
-    public function __get($key)
-    {
-        switch ($key) {
-            case 'file':
-                return $this->file;
-            case 'line':
-                return $this->line;
-            case 'originalFile':
-                return $this->originalFile;
-            case 'originalLine':
-                return $this->originalLine;
-        }
-        return parent::__get($key);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param string $key
-     * @return boolean
-     */
-    public function __isset($key)
-    {
-        if (\in_array($key, ['file', 'line', 'originalFile', 'originalLine'])) {
-            return true;
-        }
-        return parent::__isset($key);
-    }
-
-    /**
-     * @var string
-     */
-    protected $file;
-
-    /**
-     * @var int
-     */
-    protected $line;
-
-    /**
-     * @var string
-     */
-    private $originalFile;
-
-    /**
-     * @var int
-     */
-    private $originalLine;
 }
