@@ -2,15 +2,15 @@
 
 ### Documentation
 
-[Documentation in Russian](https://github.com/axypro/backtrace/wiki/ru)
+[Documentation in Russian](http://docs.axypro.ru/ru/backtrace/).
 
 ### Install
 
-`composer require axy/backtrace:~0.0.1`
+Composer package: `axy/backtrace`.
 
 ### Dependencies
 
 Uses PHP 5.4+
 
-Library does not require any dependencies
+Library does not require any dependencies.
 
