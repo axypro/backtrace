@@ -9,13 +9,13 @@ use axy\backtrace\ExceptionTrace;
 use axy\backtrace\tests\hlp\GetExceptionTrace;
 
 /**
- * @coversDefaultClass axy\backtrace\ExceptionTrace
+ * coversDefaultClass axy\backtrace\ExceptionTrace
  */
 class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers ::__construct
-     * @covers ::__get
+     * covers ::__construct
+     * covers ::__get
      */
     public function testConstruct()
     {
@@ -33,8 +33,8 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::__construct
-     * @covers ::__get
+     * covers ::__construct
+     * covers ::__get
      */
     public function testConstructNull()
     {
@@ -47,8 +47,8 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::__construct
-     * @covers ::__get
+     * covers ::__construct
+     * covers ::__get
      */
     public function testConstructFileNull()
     {
@@ -63,7 +63,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::__isset
+     * covers ::__isset
      */
     public function testMagicIsset()
     {
@@ -75,7 +75,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::trimFilename
+     * covers ::trimFilename
      */
     public function testTrimFilename()
     {
@@ -98,8 +98,8 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::truncate
-     * @covers ::truncateByNamespace
+     * covers ::truncate
+     * covers ::truncateByNamespace
      */
     public function testTruncateByNamespaceTrunc()
     {
@@ -123,8 +123,8 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::truncate
-     * @covers ::truncateByNamespace
+     * covers ::truncate
+     * covers ::truncateByNamespace
      */
     public function testTruncateByNamespaceTop()
     {
@@ -140,8 +140,8 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::truncate
-     * @covers ::truncateByNamespace
+     * covers ::truncate
+     * covers ::truncateByNamespace
      */
     public function testTruncateByNamespaceSkip()
     {
@@ -157,8 +157,8 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::truncate
-     * @covers ::truncateByDir
+     * covers ::truncate
+     * covers ::truncateByDir
      */
     public function testTruncateByDirTop()
     {
@@ -175,8 +175,8 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::truncate
-     * @covers ::truncateByDir
+     * covers ::truncate
+     * covers ::truncateByDir
      */
     public function testTruncateByDirSkip()
     {

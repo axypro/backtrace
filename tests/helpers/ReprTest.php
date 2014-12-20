@@ -8,12 +8,12 @@ namespace axy\backtrace\tests\helpers;
 use axy\backtrace\helpers\Repr;
 
 /**
- * @coversDefaultClass axy\backtrace\helpers\Repr
+ * coversDefaultClass axy\backtrace\helpers\Repr
  */
 class ReprTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers ::arg
+     * covers ::arg
      * @dataProvider providerArg
      * @param mixed $value
      * @param string $expected
@@ -45,7 +45,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::method
+     * covers ::method
      * @dataProvider providerMethod
      * @param array $item
      * @param string $expected
@@ -89,7 +89,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::point
+     * covers ::point
      * @dataProvider providerPoint
      * @param array $item
      * @param string $expected
@@ -127,7 +127,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::item
+     * covers ::item
      * @dataProvider providerItem
      * @param array $item
      * @param int $number
@@ -160,7 +160,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::trace
+     * covers ::trace
      * @dataProvider providerTrace
      * @param array $items
      * @param array $expectedLines

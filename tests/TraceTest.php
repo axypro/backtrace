@@ -8,13 +8,13 @@ namespace axy\backtrace\tests;
 use axy\backtrace\Trace;
 
 /**
- * @coversDefaultClass axy\backtrace\Trace
+ * coversDefaultClass axy\backtrace\Trace
  */
 class TraceTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers ::__construct
-     * @covers ::__get
+     * covers ::__construct
+     * covers ::__get
      */
     public function testConstructByArray()
     {
@@ -28,8 +28,8 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::__construct
-     * @covers ::__get
+     * covers ::__construct
+     * covers ::__get
      */
     public function testConstructByNull()
     {
@@ -41,7 +41,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::normalize
+     * covers ::normalize
      */
     public function testNormalize()
     {
@@ -76,7 +76,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::truncateByLimit
+     * covers ::truncateByLimit
      */
     public function testTruncateByLimit()
     {
@@ -107,7 +107,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::trimFilename
+     * covers ::trimFilename
      */
     public function testTrimFilename()
     {
@@ -132,8 +132,8 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::truncate
-     * @covers ::truncateByFilter
+     * covers ::truncate
+     * covers ::truncateByFilter
      */
     public function testTruncateByFilterLeft()
     {
@@ -159,8 +159,8 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::truncate
-     * @covers ::truncateByFilter
+     * covers ::truncate
+     * covers ::truncateByFilter
      */
     public function testTruncateByFilterLeave()
     {
@@ -191,8 +191,8 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::truncate
-     * @covers ::truncateByFilter
+     * covers ::truncate
+     * covers ::truncateByFilter
      */
     public function testTruncateByFilterLeaveTop()
     {
@@ -208,8 +208,8 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::truncate
-     * @covers ::truncateByFilter
+     * covers ::truncate
+     * covers ::truncateByFilter
      */
     public function testTruncateByFilterSkip()
     {
@@ -222,8 +222,8 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::truncate
-     * @covers ::truncateByNamespace
+     * covers ::truncate
+     * covers ::truncateByNamespace
      */
     public function testTruncateByNamespace()
     {
@@ -262,8 +262,8 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::truncate
-     * @covers ::truncateByClass
+     * covers ::truncate
+     * covers ::truncateByClass
      */
     public function testTruncateByClass()
     {
@@ -298,8 +298,8 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covert ::truncate
-     * @covers ::truncateByFile
+     * covers ::truncate
+     * covers ::truncateByFile
      */
     public function testTruncateByFile()
     {
@@ -322,8 +322,8 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::truncate
-     * @covers ::truncateByDir
+     * covers ::truncate
+     * covers ::truncateByDir
      */
     public function testTruncateByDir()
     {
@@ -358,7 +358,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::__isset
+     * covers ::__isset
      */
     public function testMagicIsset()
     {
@@ -368,7 +368,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::__set
+     * covers ::__set
      * @expectedException \LogicException
      */
     public function testMagicSetForbidden()
@@ -378,7 +378,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::__unset
+     * covers ::__unset
      * @expectedException \LogicException
      */
     public function testMagicUnsetForbidden()
@@ -388,7 +388,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::count
+     * covers ::count
      */
     public function testCountable()
     {
@@ -404,7 +404,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::getIterator
+     * covers ::getIterator
      */
     public function testTraversable()
     {
@@ -418,8 +418,8 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::offsetExists
-     * @covers ::offsetGet
+     * covers ::offsetExists
+     * covers ::offsetGet
      */
     public function testArrayAccess()
     {
@@ -438,7 +438,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::__toString
+     * covers ::__toString
      */
     public function testToString()
     {
