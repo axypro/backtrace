@@ -38,6 +38,8 @@ class TraceTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(\count($current), $trace->items);
         $this->assertEquals($current[0], $trace->items[0]);
         $this->assertEquals($trace->items, $trace->originalItems);
+        $this->setExpectedException('LogicException');
+        return $trace->unknown;
     }
 
     /**
@@ -451,6 +453,26 @@ class TraceTest extends \PHPUnit_Framework_TestCase
             '#2 {main}'.\PHP_EOL;
         $trace = new Trace($items);
         $this->assertSame($expected, ''.$trace);
+    }
+
+    /**
+     * covers ::offsetSet
+     * @expectedException \LogicException
+     */
+    public function testOffsetSet()
+    {
+        $trace = new Trace();
+        $trace[1] = 5;
+    }
+
+    /**
+     * covers ::offsetUnser
+     * @expectedException \LogicException
+     */
+    public function testOffsetUnset()
+    {
+        $trace = new Trace();
+        unset($trace[1]);
     }
 
     /**

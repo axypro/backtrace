@@ -190,4 +190,55 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('my/ns/Class.php', $trace->file);
         $this->assertSame(12, $trace->line);
     }
+
+    /**
+     * covers ::truncate
+     * covers ::truncateByFile
+     */
+    public function testTruncateByFile()
+    {
+        $items = [
+            ['file' => 'func.php', 'line' => 20, 'class' => 'my\ns\Class'],
+            ['file' => 'index.php', 'line' => 10, 'function' => 'func',],
+        ];
+        $trace = new ExceptionTrace($items, 'my/ns/Class.php', 12);
+        $this->assertTrue($trace->truncateByFile('func.php'));
+        $this->assertEquals([$items[1]], $trace->items);
+        $this->assertSame('index.php', $trace->file);
+        $this->assertSame(10, $trace->line);
+    }
+
+    /**
+     * covers ::truncate
+     * covers ::truncateByFile
+     */
+    public function testTruncateByFileTop()
+    {
+        $items = [
+            ['file' => 'func.php', 'line' => 20, 'class' => 'my\ns\Class'],
+            ['file' => 'index.php', 'line' => 10, 'function' => 'func',],
+        ];
+        $trace = new ExceptionTrace($items, 'my/ns/Class.php', 12);
+        $this->assertTrue($trace->truncateByFile('my/ns/Class.php'));
+        $this->assertEquals($items, $trace->items);
+        $this->assertSame('func.php', $trace->file);
+        $this->assertSame(20, $trace->line);
+    }
+
+    /**
+     * covers ::truncate
+     * covers ::truncateByFile
+     */
+    public function testTruncateByFileSkip()
+    {
+        $items = [
+            ['file' => 'func.php', 'line' => 20, 'class' => 'my\ns\Class'],
+            ['file' => 'index.php', 'line' => 10, 'function' => 'func',],
+        ];
+        $trace = new ExceptionTrace($items, 'my/ns/Class.php', 12);
+        $this->assertFalse($trace->truncateByFile('unk.php'));
+        $this->assertEquals($items, $trace->items);
+        $this->assertSame('my/ns/Class.php', $trace->file);
+        $this->assertSame(12, $trace->line);
+    }
 }

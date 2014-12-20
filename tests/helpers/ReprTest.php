@@ -85,6 +85,12 @@ class ReprTest extends \PHPUnit_Framework_TestCase
                 ],
                 'my\ns\MyClass->method(\'this is very lo...\')',
             ],
+            [
+                [
+                    'class' => 'x',
+                ],
+                '',
+            ]
         ];
     }
 

@@ -113,17 +113,17 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     public function truncate(array $options)
     {
         $options = \array_replace($this->defaultOptions, $options);
-        $nitems = [];
+        $nItems = [];
         foreach (\array_reverse($this->props['items']) as $item) {
             $f = $this->filterItem($item, $options);
             if ($f) {
                 if ($f !== self::FILTER_LEFT) {
-                    $nitems[] = $item;
+                    $nItems[] = $item;
                 }
-                $this->props['items'] = \array_reverse($nitems);
+                $this->props['items'] = \array_reverse($nItems);
                 return true;
             }
-            $nitems[] = $item;
+            $nItems[] = $item;
         }
         return false;
     }

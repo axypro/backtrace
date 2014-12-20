@@ -77,24 +77,24 @@ class ExceptionTrace extends Trace
      */
     public function truncate(array $options)
     {
-        $trunc = parent::truncate($options);
-        if (!$trunc) {
+        $result = parent::truncate($options);
+        if (!$result) {
             if (!empty($options['file'])) {
                 if ($options['file'] === $this->props['file']) {
-                    $trunc = true;
+                    $result = true;
                 }
             }
             if (!empty($options['dir'])) {
                 if (\strpos($this->props['file'], $options['dir']) === 0) {
-                    $trunc = true;
+                    $result = true;
                 }
             }
         }
-        if ($trunc) {
+        if ($result) {
             $items = $this->props['items'];
             $this->props['file'] = empty($items[0]['file']) ? '' : $items[0]['file'];
             $this->props['line'] = empty($items[0]['line']) ? 0 : $items[0]['line'];
         }
-        return $trunc;
+        return $result;
     }
 }
