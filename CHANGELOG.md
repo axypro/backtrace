@@ -2,6 +2,7 @@
 
 * Some fixes in texts and phpdoc
 * Tests: maximum coverage
+* Documentation in English
 
 ### 0.0.2 (24.01.2014)
 

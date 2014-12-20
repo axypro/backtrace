@@ -2,7 +2,7 @@
 
 ### Documentation
 
-[Documentation in Russian](http://docs.axypro.ru/ru/backtrace/).
+[Documentation](https://github.com/axypro/backtrace/blob/master/doc/README.md).
 
 ### Install
 
