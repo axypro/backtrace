@@ -466,7 +466,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * covers ::offsetUnser
+     * covers ::offsetUnset
      * @expectedException \LogicException
      */
     public function testOffsetUnset()

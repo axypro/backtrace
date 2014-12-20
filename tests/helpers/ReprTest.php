@@ -202,7 +202,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
                             function ($m) {
                                 return $m[0];
                             },
-                            'asas',
+                            'str',
                         ],
                     ],
                     [
@@ -222,7 +222,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
                 ],
                 [
                     '#0 [internal function]: my\ns\A::my\ns\{closure}(Array)',
-                    '#1 /test/e.php(17): preg_replace_callback(\'~a~\', Object(Closure), \'asas\')',
+                    '#1 /test/e.php(17): preg_replace_callback(\'~a~\', Object(Closure), \'str\')',
                     '#2 /test/e.php(8): my\ns\A::method(3)',
                     '#3 /test/e.php(23): my\ns\f(\'str\')',
                     '#4 {main}',

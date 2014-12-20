@@ -1,14 +1,13 @@
 <?php
 /**
  * @package axy\backtrace
+ * @author Oleg Grigoriev <go.vasac@gmail.com>
  */
 
 namespace axy\backtrace;
 
 /**
- * The class of a calling trace
- *
- * @author Oleg Grigoriev <go.vasac@gmail.com>
+ * The class of call trace
  *
  * @property-read array $items
  *                the current state of the backtrace
@@ -18,31 +17,31 @@ namespace axy\backtrace;
 class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
 {
     /**
-     * The filter result: do not truncate
+     * Filtering result: do not truncate
      *
      * @var mixed
      */
     const FILTER_SKIP = false;
 
     /**
-     * The filter result: truncate, but leave this item
+     * Filtering result: truncate, but leave this item
      *
      * @var int
      */
     const FILTER_LEAVE = 1;
 
     /**
-     * The filter result: truncate together with this item
+     * Filtering result: truncate together with this item
      *
      * @var int
      */
     const FILTER_LEFT = 2;
 
     /**
-     * Constructor
+     * The constructor
      *
      * @param mixed $items [optional]
-     *        a trace array or NULL (a current trace)
+     *        a trace array or NULL (for the current trace)
      */
     public function __construct(array $items = null)
     {
@@ -57,7 +56,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Normalizes trace items
+     * Normalizes the trace items
      */
     final public function normalize()
     {
@@ -83,10 +82,10 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Trim a file name by a dirname
+     * Trims a filename by a basic directory name
      *
      * @param string $prefix
-     * @return boolean
+     * @return bool
      */
     public function trimFilename($prefix)
     {
@@ -103,12 +102,12 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Truncate the trace by a options
+     * Truncates the trace by a options
      *
      * @param array $options
      *        the options (see $defaultOptions for list)
      * @return boolean
-     *         point of truncate was found
+     *         Was found truncation point?
      */
     public function truncate(array $options)
     {
@@ -129,7 +128,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Truncate the trace by a filter
+     * Truncates the trace by a filter
      *
      * @param callable $filter
      * @return boolean
@@ -140,7 +139,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Truncate the trace by a namespace
+     * Truncates the trace by a namespace
      *
      * @param string $namespace
      * @return boolean
@@ -151,7 +150,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Truncate the trace by a class
+     * Truncates the trace by a class name
      *
      * @param string $class
      * @return boolean
@@ -162,7 +161,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Truncate the trace by a file
+     * Truncates the trace by a file name
      *
      * @param string $file
      * @return boolean
@@ -173,7 +172,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * Truncate the trace by a dir
+     * Truncates the trace by a directory name
      *
      * @param string $dir
      * @return boolean

@@ -17,7 +17,7 @@ class Repr
      *
      * @var int
      */
-    const MAXLEN = 15;
+    const MAX_LEN = 15;
 
     /**
      * Represents an argument of a method as a string
@@ -125,7 +125,7 @@ class Repr
     }
 
     /**
-     * Cut a string by maxlen
+     * Cuts a string by the max length
      *
      * @param string $str
      * @return string
@@ -141,11 +141,11 @@ class Repr
         } else {
             $len = \strlen($str);
         }
-        if ($len > self::MAXLEN) {
+        if ($len > self::MAX_LEN) {
             if ($mb) {
-                return \mb_substr($str, 0, self::MAXLEN, 'UTF-8').'...';
+                return \mb_substr($str, 0, self::MAX_LEN, 'UTF-8').'...';
             } else {
-                return \substr($str, 0, self::MAXLEN).'...';
+                return \substr($str, 0, self::MAX_LEN).'...';
             }
         }
         return $str;

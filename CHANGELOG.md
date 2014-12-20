@@ -1,6 +1,7 @@
 ### Dev
 
 * Some fixes in texts and phpdoc
+* Tests: maximum coverage
 
 ### 0.0.2 (24.01.2014)
 

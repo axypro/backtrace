@@ -1,14 +1,13 @@
 <?php
 /**
  * @package axy\backtrace
+ * @author Oleg Grigoriev <go.vasac@gmail.com>
  */
 
 namespace axy\backtrace;
 
 /**
  * The class of an exception trace
- *
- * @author Oleg Grigoriev <go.vasac@gmail.com>
  *
  * @property-read string $file
  *                the current state of the point filename
@@ -22,10 +21,10 @@ namespace axy\backtrace;
 class ExceptionTrace extends Trace
 {
     /**
-     * Constructor
+     * The constructor
      *
      * @param mixed $items [optional]
-     *        a trace array or NULL (a current trace)
+     *        a trace array or NULL (for the current trace)
      * @param string $file [optional]
      *        a filename of the exception point
      * @param int $line [optional]
@@ -50,13 +49,13 @@ class ExceptionTrace extends Trace
         if (($line === null) && (isset($items[0]))) {
             $line = $items[0]['line'];
         }
-        $nprops = [
+        $nProps = [
             'file' => $file,
             'line' => $line,
             'originalFile' => $file,
             'originalLine' => $line,
         ];
-        $this->props = \array_replace($this->props, $nprops);
+        $this->props = \array_replace($this->props, $nProps);
     }
 
     /**

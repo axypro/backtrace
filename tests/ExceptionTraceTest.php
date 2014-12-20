@@ -101,7 +101,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByNamespace
      */
-    public function testTruncateByNamespaceTrunc()
+    public function testTruncateByNamespace()
     {
         $items = [
             ['file' => 'my/ns/Class.php', 'line' => 30, 'class' => 'my\ns\Second'],

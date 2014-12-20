@@ -1,6 +1,6 @@
 <?php
 /**
- * Tracing in php
+ * Tracing in PHP
  *
  * @package axy\backtrace
  * @author Oleg Grigoriev <go.vasac@gmail.com>
