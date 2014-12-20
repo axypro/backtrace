@@ -10,7 +10,6 @@ Composer package: `axy/backtrace`.
 
 ### Dependencies
 
-Uses PHP 5.4+
+PHP 5.4+
 
 Library does not require any dependencies.
-

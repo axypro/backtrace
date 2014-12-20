@@ -71,6 +71,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      * Truncates the trace by a limit
      *
      * @param int $limit
+     * @return bool
      */
     final public function truncateByLimit($limit)
     {
@@ -300,6 +301,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      *
      * @param array $item
      *        an item of the backtrace
+     * @param array $options
      * @return mixed
      *         result as FILTER_* constant
      */

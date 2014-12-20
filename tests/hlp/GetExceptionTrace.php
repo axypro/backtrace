@@ -3,6 +3,8 @@
 
 namespace axy\backtrace\tests\hlp;
 
+use axy\backtrace\ExceptionTrace;
+
 class GetExceptionTrace
 {
     /**
@@ -28,7 +30,7 @@ class GetExceptionTrace
     public function __construct()
     {
         $this->native = \debug_backtrace();
-        $this->trace = new \axy\backtrace\ExceptionTrace();
+        $this->trace = new ExceptionTrace();
         $this->line = __LINE__ - 1;
         $this->file = __FILE__;
     }

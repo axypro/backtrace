@@ -130,6 +130,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
      * @covers ::item
      * @dataProvider providerItem
      * @param array $item
+     * @param int $number
      * @param string $expected
      */
     public function testItem(array $item, $number, $expected)
@@ -162,7 +163,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
      * @covers ::trace
      * @dataProvider providerTrace
      * @param array $items
-     * @param array $expected
+     * @param array $expectedLines
      */
     public function testTrace(array $items, array $expectedLines)
     {

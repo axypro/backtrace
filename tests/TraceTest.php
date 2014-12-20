@@ -214,7 +214,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     public function testTruncateByFilterSkip()
     {
         $trace = $this->getTraceForTruncate();
-        $filter = function (array $item) {
+        $filter = function () {
             return Trace::FILTER_SKIP;
         };
         $this->assertFalse($trace->truncateByFilter($filter));
