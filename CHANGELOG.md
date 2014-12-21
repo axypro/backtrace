@@ -1,4 +1,4 @@
-### Dev
+### 1.0.0 (21.12.2014)
 
 * Some fixes in texts and phpdoc
 * Tests: maximum coverage
