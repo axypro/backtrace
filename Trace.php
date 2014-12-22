@@ -315,30 +315,55 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
             }
         }
         if (!empty($item['class'])) {
-            if ($options['namespace']) {
-                if (strpos($item['class'], $options['namespace'].'\\') === 0) {
-                    return self::FILTER_LEAVE;
-                }
-            }
-            if ($options['class']) {
-                if ($item['class'] === $options['class']) {
-                    return self::FILTER_LEAVE;
-                }
+            $result = $this->filterByClass($item, $options);
+            if ($result !== false) {
+                return $result;
             }
         }
         if (!empty($item['file'])) {
-            if ($options['dir']) {
-                if (strpos($item['file'], $options['dir']) === 0) {
-                    return self::FILTER_LEFT;
-                }
-            }
-            if ($options['file']) {
-                if ($item['file'] === $options['file']) {
-                    return self::FILTER_LEFT;
-                }
-            }
+            return $this->filterByFile($item, $options);
         }
         return self::FILTER_SKIP;
+    }
+
+    /**
+     * @param array $item
+     * @param array $options
+     * @return mixed
+     */
+    private function filterByClass($item, $options)
+    {
+        if ($options['namespace']) {
+            if (strpos($item['class'], $options['namespace'].'\\') === 0) {
+                return self::FILTER_LEAVE;
+            }
+        }
+        if ($options['class']) {
+            if ($item['class'] === $options['class']) {
+                return self::FILTER_LEAVE;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param array $item
+     * @param array $options
+     * @return mixed
+     */
+    private function filterByFile($item, $options)
+    {
+        if ($options['dir']) {
+            if (strpos($item['file'], $options['dir']) === 0) {
+                return self::FILTER_LEFT;
+            }
+        }
+        if ($options['file']) {
+            if ($item['file'] === $options['file']) {
+                return self::FILTER_LEFT;
+            }
+        }
+        return false;
     }
 
     /**

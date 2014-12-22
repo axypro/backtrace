@@ -1,3 +1,9 @@
+### 1.0.1 (22.12.2014)
+
+* PHPMD
+* Small refactoring
+* Code style
+
 ### 1.0.0 (21.12.2014)
 
 * Some fixes in texts and phpdoc

@@ -33,14 +33,7 @@ class ExceptionTrace extends Trace
     public function __construct(array $items = null, $file = null, $line = null)
     {
         if ($items === null) {
-            $items = debug_backtrace();
-            $top = array_shift($items);
-            if (($file === null) && (!empty($top['file']))) {
-                $file = $top['file'];
-            }
-            if (($line === null) && (!empty($top['line']))) {
-                $line = $top['line'];
-            }
+            $items = $this->loadCurrentPoint(debug_backtrace(), $file, $line);
         }
         parent::__construct($items);
         if (($file === null) && (isset($items[0]))) {
@@ -78,16 +71,7 @@ class ExceptionTrace extends Trace
     {
         $result = parent::truncate($options);
         if (!$result) {
-            if (!empty($options['file'])) {
-                if ($options['file'] === $this->props['file']) {
-                    $result = true;
-                }
-            }
-            if (!empty($options['dir'])) {
-                if (strpos($this->props['file'], $options['dir']) === 0) {
-                    $result = true;
-                }
-            }
+            $result = $this->defineFLForNoResult($options);
         }
         if ($result) {
             $items = $this->props['items'];
@@ -95,5 +79,38 @@ class ExceptionTrace extends Trace
             $this->props['line'] = empty($items[0]['line']) ? 0 : $items[0]['line'];
         }
         return $result;
+    }
+
+    /**
+     * @param array $items
+     * @param string $file
+     * @param int $line
+     * @return array
+     */
+    private function loadCurrentPoint($items, &$file, &$line)
+    {
+        $top = array_shift($items);
+        if (($file === null) && (!empty($top['file']))) {
+            $file = $top['file'];
+        }
+        if (($line === null) && (!empty($top['line']))) {
+            $line = $top['line'];
+        }
+        return $items;
+    }
+
+    /**
+     * @param array $options
+     * @return boolean
+     */
+    private function defineFLForNoResult($options)
+    {
+        if ((!empty($options['file'])) && ($options['file'] === $this->props['file'])) {
+            return true;
+        }
+        if ((!empty($options['dir'])) && (strpos($this->props['file'], $options['dir']) === 0)) {
+            return true;
+        }
+        return false;
     }
 }
