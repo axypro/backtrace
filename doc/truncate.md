@@ -1,4 +1,4 @@
-# `tuncate`-methods
+# `truncate`-methods
 
 Methods whose names begin with the prefix `truncate` cut stack at some point.
 Usually, this is the entry point into a certain namespace.
