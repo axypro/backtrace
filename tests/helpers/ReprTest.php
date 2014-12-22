@@ -173,7 +173,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
      */
     public function testTrace(array $items, array $expectedLines)
     {
-        $expected = \implode('-', $expectedLines).'-';
+        $expected = implode('-', $expectedLines).'-';
         $this->assertSame($expected, Repr::trace($items, '-'));
     }
 

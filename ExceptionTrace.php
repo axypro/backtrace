@@ -33,8 +33,8 @@ class ExceptionTrace extends Trace
     public function __construct(array $items = null, $file = null, $line = null)
     {
         if ($items === null) {
-            $items = \debug_backtrace();
-            $top = \array_shift($items);
+            $items = debug_backtrace();
+            $top = array_shift($items);
             if (($file === null) && (!empty($top['file']))) {
                 $file = $top['file'];
             }
@@ -55,7 +55,7 @@ class ExceptionTrace extends Trace
             'originalFile' => $file,
             'originalLine' => $line,
         ];
-        $this->props = \array_replace($this->props, $nProps);
+        $this->props = array_replace($this->props, $nProps);
     }
 
     /**
@@ -64,8 +64,8 @@ class ExceptionTrace extends Trace
     public function trimFilename($prefix)
     {
         $affected = parent::trimFilename($prefix);
-        if (\strpos($this->props['file'], $prefix) === 0) {
-            $this->props['file'] = \substr($this->props['file'], \strlen($prefix));
+        if (strpos($this->props['file'], $prefix) === 0) {
+            $this->props['file'] = substr($this->props['file'], strlen($prefix));
             $affected = true;
         }
         return $affected;
@@ -84,7 +84,7 @@ class ExceptionTrace extends Trace
                 }
             }
             if (!empty($options['dir'])) {
-                if (\strpos($this->props['file'], $options['dir']) === 0) {
+                if (strpos($this->props['file'], $options['dir']) === 0) {
                     $result = true;
                 }
             }

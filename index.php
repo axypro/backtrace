@@ -13,7 +13,7 @@
 
 namespace axy\backtrace;
 
-if (!\is_file(__DIR__.'/vendor/autoload.php')) {
+if (!is_file(__DIR__.'/vendor/autoload.php')) {
     throw new \LogicException('Please: composer install');
 }
 

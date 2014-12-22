@@ -27,7 +27,7 @@ class Repr
      */
     public static function arg($value)
     {
-        switch (\gettype($value)) {
+        switch (gettype($value)) {
             case 'NULL':
                 return 'NULL';
             case 'boolean':
@@ -35,7 +35,7 @@ class Repr
             case 'array':
                 return 'Array';
             case 'object':
-                return 'Object('.\get_class($value).')';
+                return 'Object('.get_class($value).')';
             case 'string':
                 return "'".self::cutString((string)$value)."'";
             default:
@@ -66,7 +66,7 @@ class Repr
             $arg = self::arg($arg);
         }
         unset($arg);
-        return $class.$method.'('.\implode(', ', $args).')';
+        return $class.$method.'('.implode(', ', $args).')';
     }
 
     /**
@@ -114,14 +114,14 @@ class Repr
      *        a line separator
      * @return string
      */
-    public static function trace(array $items, $sep = \PHP_EOL)
+    public static function trace(array $items, $sep = PHP_EOL)
     {
         $lines = [];
         foreach ($items as $number => $item) {
             $lines[] = self::item($item, $number);
         }
-        $lines[] = '#'.(\count($items)).' {main}';
-        return \implode($sep, $lines).$sep;
+        $lines[] = '#'.(count($items)).' {main}';
+        return implode($sep, $lines).$sep;
     }
 
     /**
@@ -134,18 +134,18 @@ class Repr
     {
         static $mb;
         if ($mb === null) {
-            $mb = \function_exists('mb_strlen');
+            $mb = function_exists('mb_strlen');
         }
         if ($mb) {
-            $len = \mb_strlen($str, 'UTF-8');
+            $len = mb_strlen($str, 'UTF-8');
         } else {
-            $len = \strlen($str);
+            $len = strlen($str);
         }
         if ($len > self::MAX_LEN) {
             if ($mb) {
-                return \mb_substr($str, 0, self::MAX_LEN, 'UTF-8').'...';
+                return mb_substr($str, 0, self::MAX_LEN, 'UTF-8').'...';
             } else {
-                return \substr($str, 0, self::MAX_LEN).'...';
+                return substr($str, 0, self::MAX_LEN).'...';
             }
         }
         return $str;

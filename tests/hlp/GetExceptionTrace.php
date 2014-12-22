@@ -29,7 +29,7 @@ class GetExceptionTrace
 
     public function __construct()
     {
-        $this->native = \debug_backtrace();
+        $this->native = debug_backtrace();
         $this->trace = new ExceptionTrace();
         $this->line = __LINE__ - 1;
         $this->file = __FILE__;

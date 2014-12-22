@@ -6,6 +6,8 @@
 
 namespace axy\backtrace;
 
+use axy\backtrace\helpers\Repr;
+
 /**
  * The class of call trace
  *
@@ -46,8 +48,8 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     public function __construct(array $items = null)
     {
         if ($items === null) {
-            $items = \debug_backtrace();
-            \array_shift($items);
+            $items = debug_backtrace();
+            array_shift($items);
         }
         $this->props = [
             'items' => $items,
@@ -61,7 +63,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     final public function normalize()
     {
         foreach ($this->props['items'] as &$item) {
-            $item = \array_replace($this->defaultItem, $item);
+            $item = array_replace($this->defaultItem, $item);
         }
         unset($item);
     }
@@ -74,10 +76,10 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     final public function truncateByLimit($limit)
     {
-        if (\count($this->props['items']) <= $limit) {
+        if (count($this->props['items']) <= $limit) {
             return false;
         }
-        $this->props['items'] = \array_slice($this->props['items'], 0, $limit);
+        $this->props['items'] = array_slice($this->props['items'], 0, $limit);
         return true;
     }
 
@@ -90,10 +92,10 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     public function trimFilename($prefix)
     {
         $affected = false;
-        $len = \strlen($prefix);
+        $len = strlen($prefix);
         foreach ($this->props['items'] as &$item) {
-            if ((!empty($item['file'])) && (\strpos($item['file'], $prefix) === 0)) {
-                $item['file'] = \substr($item['file'], $len);
+            if ((!empty($item['file'])) && (strpos($item['file'], $prefix) === 0)) {
+                $item['file'] = substr($item['file'], $len);
                 $affected = true;
             }
         }
@@ -111,15 +113,15 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     public function truncate(array $options)
     {
-        $options = \array_replace($this->defaultOptions, $options);
+        $options = array_replace($this->defaultOptions, $options);
         $nItems = [];
-        foreach (\array_reverse($this->props['items']) as $item) {
+        foreach (array_reverse($this->props['items']) as $item) {
             $f = $this->filterItem($item, $options);
             if ($f) {
                 if ($f !== self::FILTER_LEFT) {
                     $nItems[] = $item;
                 }
-                $this->props['items'] = \array_reverse($nItems);
+                $this->props['items'] = array_reverse($nItems);
                 return true;
             }
             $nItems[] = $item;
@@ -192,7 +194,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     final public function __get($key)
     {
-        if (!\array_key_exists($key, $this->props)) {
+        if (!array_key_exists($key, $this->props)) {
             throw new \LogicException('A field "'.$key.'" is not found in a Trace');
         }
         return $this->props[$key];
@@ -206,7 +208,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     final public function __isset($key)
     {
-        return \array_key_exists($key, $this->props);
+        return array_key_exists($key, $this->props);
     }
 
     /**
@@ -237,7 +239,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     final public function count()
     {
-        return \count($this->props['items']);
+        return count($this->props['items']);
     }
 
     /**
@@ -292,7 +294,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     final public function __toString()
     {
-        return helpers\Repr::trace($this->props['items']);
+        return Repr::trace($this->props['items']);
     }
 
     /**
@@ -307,14 +309,14 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     protected function filterItem(array $item, array $options)
     {
         if ($options['filter']) {
-            $f = \call_user_func($options['filter'], $item);
+            $f = call_user_func($options['filter'], $item);
             if ($f) {
                 return $f;
             }
         }
         if (!empty($item['class'])) {
             if ($options['namespace']) {
-                if (\strpos($item['class'], $options['namespace'].'\\') === 0) {
+                if (strpos($item['class'], $options['namespace'].'\\') === 0) {
                     return self::FILTER_LEAVE;
                 }
             }
@@ -326,7 +328,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
         }
         if (!empty($item['file'])) {
             if ($options['dir']) {
-                if (\strpos($item['file'], $options['dir']) === 0) {
+                if (strpos($item['file'], $options['dir']) === 0) {
                     return self::FILTER_LEFT;
                 }
             }
