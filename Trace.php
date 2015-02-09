@@ -11,6 +11,7 @@ use axy\backtrace\helpers\Repr;
 /**
  * The class of call trace
  *
+ * @link https://github.com/axypro/backtrace/blob/master/doc/Trace.md documentation
  * @property-read array $items
  *                the current state of the backtrace
  * @property-read array $originalItems
@@ -106,6 +107,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Truncates the trace by a options
      *
+     * @link https://github.com/axypro/backtrace/blob/master/doc/truncate.md documentation
      * @param array $options
      *        the options (see $defaultOptions for list)
      * @return boolean
@@ -132,6 +134,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Truncates the trace by a filter
      *
+     * @link https://github.com/axypro/backtrace/blob/master/doc/truncate.md documentation
      * @param callable $filter
      * @return boolean
      */
@@ -143,6 +146,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Truncates the trace by a namespace
      *
+     * @link https://github.com/axypro/backtrace/blob/master/doc/truncate.md documentation
      * @param string $namespace
      * @return boolean
      */
@@ -154,6 +158,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Truncates the trace by a class name
      *
+     * @link https://github.com/axypro/backtrace/blob/master/doc/truncate.md documentation
      * @param string $class
      * @return boolean
      */
@@ -165,6 +170,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Truncates the trace by a file name
      *
+     * @link https://github.com/axypro/backtrace/blob/master/doc/truncate.md documentation
      * @param string $file
      * @return boolean
      */
@@ -176,6 +182,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
     /**
      * Truncates the trace by a directory name
      *
+     * @link https://github.com/axypro/backtrace/blob/master/doc/truncate.md documentation
      * @param string $dir
      * @return boolean
      */

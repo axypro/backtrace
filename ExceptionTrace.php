@@ -9,6 +9,7 @@ namespace axy\backtrace;
 /**
  * The class of an exception trace
  *
+ * @link https://github.com/axypro/backtrace/blob/master/doc/ExceptionTrace.md documentation
  * @property-read string $file
  *                the current state of the point filename
  * @property-read int $line

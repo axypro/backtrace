@@ -1,3 +1,7 @@
+### 1.0.2 (09.02.2014)
+
+* @links to the documentation
+
 ### 1.0.1 (22.12.2014)
 
 * PHPMD

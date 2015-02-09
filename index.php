@@ -7,7 +7,7 @@
  * @license https://raw.github.com/axypro/backtrace/master/LICENSE MIT
  * @link https://github.com/axypro/backtrace repository
  * @link https://github.com/axypro/backtrace/blob/master/doc/README.md documentation
- * @link https://packagist.org/packages/axy/backtrace composer package
+ * @link https://packagist.org/packages/axy/backtrace composer
  * @uses PHP5.4+
  */
 
