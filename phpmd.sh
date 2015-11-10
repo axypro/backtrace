@@ -1,3 +1,11 @@
 #!/usr/bin/env sh
 
-/usr/bin/env phpmd --exclude vendor . text phpmd.xml.dist
+cmd="/usr/bin/env phpmd --exclude vendor"
+args="text phpmd.xml.dist"
+
+if [ "$#" -ne 0 ]; then
+$cmd "$@" $args
+else 
+$cmd . $args
+fi
+
