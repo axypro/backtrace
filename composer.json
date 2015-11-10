@@ -25,6 +25,6 @@
         }
     },
     "archive": {
-        "exclude": ["tests/*", "doc/*", "cs.sh", "phpmd.sh", "*.xml.dist", "CHANGELOG.md"]
+        "exclude": ["/tests/*", "/doc/*", "/cs.sh", "/phpmd.sh", "/*.xml.dist", "/CHANGELOG.md"]
     }
 }

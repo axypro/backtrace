@@ -1,3 +1,7 @@
+### dev-master
+
+* Git attributes: exclude tests, docs and etc from archive
+
 ### 1.0.3 (10.11.2015)
 
 * Exclude tests, docs and etc from the composer package
