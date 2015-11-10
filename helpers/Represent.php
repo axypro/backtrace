@@ -10,7 +10,7 @@ namespace axy\backtrace\helpers;
  *
  * @author Oleg Grigoriev <go.vasac@gmail.com>
  */
-class Repr
+class Represent
 {
     /**
      * The maximum length of a method argument

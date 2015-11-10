@@ -6,7 +6,7 @@
 
 namespace axy\backtrace;
 
-use axy\backtrace\helpers\Repr;
+use axy\backtrace\helpers\Represent;
 
 /**
  * The class of call trace
@@ -302,7 +302,7 @@ class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
      */
     final public function __toString()
     {
-        return Repr::trace($this->props['items']);
+        return Represent::trace($this->props['items']);
     }
 
     /**

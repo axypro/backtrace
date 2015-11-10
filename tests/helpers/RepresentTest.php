@@ -5,12 +5,12 @@
 
 namespace axy\backtrace\tests\helpers;
 
-use axy\backtrace\helpers\Repr;
+use axy\backtrace\helpers\Represent;
 
 /**
- * coversDefaultClass axy\backtrace\helpers\Repr
+ * coversDefaultClass axy\backtrace\helpers\Represent
  */
-class ReprTest extends \PHPUnit_Framework_TestCase
+class RepresentTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * covers ::arg
@@ -20,7 +20,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
      */
     public function testArg($value, $expected)
     {
-        $this->assertSame($expected, Repr::arg($value));
+        $this->assertSame($expected, Represent::arg($value));
     }
 
     /**
@@ -40,7 +40,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
             ['длинная строка в utf-8', "'длинная строка ...'"],
             [[1, 2, 3], 'Array'],
             [(object)[1, 2, 3], 'Object(stdClass)'],
-            [$this, 'Object(axy\backtrace\tests\helpers\ReprTest)'],
+            [$this, 'Object(axy\backtrace\tests\helpers\RepresentTest)'],
         ];
     }
 
@@ -52,7 +52,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
      */
     public function testMethod(array $item, $expected)
     {
-        $this->assertSame($expected, Repr::method($item));
+        $this->assertSame($expected, Represent::method($item));
     }
 
     /**
@@ -102,7 +102,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
      */
     public function testPoint(array $item, $expected)
     {
-        $this->assertSame($expected, Repr::point($item));
+        $this->assertSame($expected, Represent::point($item));
     }
 
     /**
@@ -141,7 +141,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
      */
     public function testItem(array $item, $number, $expected)
     {
-        $this->assertSame($expected, Repr::item($item, $number));
+        $this->assertSame($expected, Represent::item($item, $number));
     }
 
     /**
@@ -174,7 +174,7 @@ class ReprTest extends \PHPUnit_Framework_TestCase
     public function testTrace(array $items, array $expectedLines)
     {
         $expected = implode('-', $expectedLines).'-';
-        $this->assertSame($expected, Repr::trace($items, '-'));
+        $this->assertSame($expected, Represent::trace($items, '-'));
     }
 
     /**
