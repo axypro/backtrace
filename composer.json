@@ -23,5 +23,8 @@
         "psr-4": {
             "axy\\backtrace\\": ""
         }
+    },
+    "archive": {
+        "exclude": ["tests/*", "doc/*", "cs.sh", "phpmd.sh", "*.xml.dist", "CHANGELOG.md"]
     }
 }
