@@ -9,6 +9,7 @@ use axy\backtrace\Trace;
 
 /**
  * coversDefaultClass axy\backtrace\Trace
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class TraceTest extends \PHPUnit_Framework_TestCase
 {
@@ -376,7 +377,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     public function testMagicSetForbidden()
     {
         $trace = new Trace([]);
-        $trace->items = [];
+        $trace->__set('items', []);
     }
 
     /**

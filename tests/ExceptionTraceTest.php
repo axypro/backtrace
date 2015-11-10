@@ -10,6 +10,7 @@ use axy\backtrace\tests\hlp\GetExceptionTrace;
 
 /**
  * coversDefaultClass axy\backtrace\ExceptionTrace
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
 {

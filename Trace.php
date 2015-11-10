@@ -16,6 +16,7 @@ use axy\backtrace\helpers\Repr;
  *                the current state of the backtrace
  * @property-read array $originalItems
  *                the original state of the backtrace
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class Trace implements \Countable, \IteratorAggregate, \ArrayAccess
 {
