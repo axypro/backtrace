@@ -1,3 +1,8 @@
+### 1.0.3 (10.11.2015)
+
+* Exclude tests, docs and etc from the composer package
+* A little refactoring and code style
+
 ### 1.0.2 (09.02.2014)
 
 * @links to the documentation
