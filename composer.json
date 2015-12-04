@@ -20,6 +20,7 @@
         "php": ">=5.4.0"
     },
     "require-dev": {
+        "satooshi/php-coveralls": "dev-master",
         "squizlabs/php_codesniffer": "~2.3"
     },
     "autoload": {
