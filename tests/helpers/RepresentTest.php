@@ -174,6 +174,8 @@ class RepresentTest extends \PHPUnit_Framework_TestCase
     public function testTrace(array $items, array $expectedLines)
     {
         $expected = implode('-', $expectedLines).'-';
+        /* In HHVM Obhect(Closure) has extended representation */
+        $expected = preg_replace('/Object\(Closure[^)]*\)/', 'Object(Closure)', $expected);
         $this->assertSame($expected, Represent::trace($items, '-'));
     }
 
