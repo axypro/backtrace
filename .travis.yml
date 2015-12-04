@@ -13,4 +13,3 @@ before_script:
 
 script:
   - phpunit
-  - phpcs --standard=PSR2 --encoding=utf-8 --ignore=vendor
