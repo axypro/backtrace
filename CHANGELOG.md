@@ -1,3 +1,8 @@
+### dev-master
+
+* Travis
+* Fix test for HHVM
+
 ### 1.0.4 (10.11.2015)
 
 * Git attributes: exclude tests, docs and etc from archive
