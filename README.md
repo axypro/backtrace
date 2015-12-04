@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/axy/backtrace.svg?style=flat-square)](https://packagist.org/packages/axy/backtrace)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.4-8892BF.svg?style=flat-square)](https://php.net/)
 [![Build Status](https://img.shields.io/travis/axypro/backtrace/master.svg?style=flat-square)](https://travis-ci.org/axypro/backtrace)
+[![Coverage Status](https://coveralls.io/repos/axypro/backtrace/badge.svg?branch=master&service=github)](https://coveralls.io/github/axypro/backtrace?branch=master)
 
 Backtrace helper library.
 
