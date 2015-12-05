@@ -20,8 +20,8 @@ install:
   - if [ "$CHECKS" = "yes" ]; then composer require squizlabs/php_codesniffer="~2.3" --dev; fi;
 
 script:
-  - if [ "$CHECKS" = "yes" ]; then mkdir -p local/logs; fi;
-  - if [ "$CHECKS" = "yes" ]; then phpunit --coverage-clover local/logs/clover.xml; else phpunit; fi;
+  - if [ "$CHECKS" = "yes" ]; then mkdir -p build/logs; fi;
+  - if [ "$CHECKS" = "yes" ]; then phpunit --coverage-clover build/logs/clover.xml; else phpunit; fi;
   - if [ "$CHECKS" = "yes" ]; then php vendor/bin/phpcs --standard=PSR2 --encoding=utf-8 --ignore=vendor .; fi;
 
 after_success:
