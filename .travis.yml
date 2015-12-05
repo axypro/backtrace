@@ -18,5 +18,5 @@ script:
   - if [ "$CHECKS" = "yes" ]; then phpunit --coverage-clover build/logs/clover.xml; else phpunit; fi;
   - if [ "$CHECKS" = "yes" ]; then php vendor/bin/phpcs --standard=PSR2 --encoding=utf-8 --ignore=vendor .; fi;
 
-after_script:
+after_success:
   - if [ "$CHECKS" = "yes" ]; then php coveralls -c .coveralls.yml; fi;
