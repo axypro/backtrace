@@ -12,8 +12,8 @@ matrix:
 before_script:
   - composer self-update
   - composer install
-  - if [ "$CHECKS" = "yes" ]; composer require satooshi/php-coveralls --dev; fi;
-  - if [ "$CHECKS" = "yes" ]; composer require squizlabs/php_codesniffer="~2.3" --dev; fi;
+  - if [ "$CHECKS" = "yes" ]; then composer require satooshi/php-coveralls --dev; fi;
+  - if [ "$CHECKS" = "yes" ]; then composer require squizlabs/php_codesniffer="~2.3" --dev; fi;
 
 script:
   - if [ "$CHECKS" = "yes" ]; then mkdir -p build/logs; fi;
