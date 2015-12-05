@@ -1,7 +1,8 @@
-### dev-master
+### 1.0.5 (05.12.2015)
 
 * Travis
 * Fix test for HHVM
+* Some fixes and refs
 
 ### 1.0.4 (10.11.2015)
 
