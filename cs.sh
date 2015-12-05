@@ -7,4 +7,3 @@ $cmd "$@"
 else
 $cmd .
 fi
-

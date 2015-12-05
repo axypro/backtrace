@@ -40,7 +40,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($current[0], $trace->items[0]);
         $this->assertEquals($trace->items, $trace->originalItems);
         $this->setExpectedException('LogicException');
-        return $trace->unknown;
+        return $trace->__get('unknown');
     }
 
     /**

@@ -18,4 +18,4 @@ script:
   - if [ "$CHECKS" = "yes" ]; then phpunit --coverage-clover build/logs/clover.xml; else phpunit; fi;
 
 after_success:
-  - if [ "$CHECKS" = "yes" ]; then php coveralls -c .coveralls.yml; fi;
+  - if [ "$CHECKS" = "yes" ]; then coveralls -c .coveralls.yml; fi;
