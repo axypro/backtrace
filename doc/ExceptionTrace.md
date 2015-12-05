@@ -71,4 +71,3 @@ In additional, `$file` and `$line` are changed to point to the entry point into 
 ### `trimFilename(string $dir)`
 
 In additional, trims the `$file`.
-

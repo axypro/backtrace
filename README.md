@@ -10,8 +10,17 @@ Backtrace helper library.
  * GitHub: [axypro/backtrace](https://github.com/axypro/backtrace)
  * Composer: [axy/backtrace](https://packagist.org/packages/axy/backtrace)
 
-[The documentation](https://github.com/axypro/backtrace/blob/master/doc/README.md).
-
 Tested on PHP 5.4+, PHP 7, HHVM (on Linux).
 
 The library does not require any dependencies.
+
+It contains some tools to simplify the work with the call stack.
+
+The library is intended primarily for debug.
+For example, it used in [axypro/errors](https://github.com/axypro/errors) for cut uninformative part of the stack
+(when displaying an exception).
+
+## The library classes
+
+ * [Trace](doc/Trace.md): the call stack.
+ * [ExceptionTrace](doc/ExceptionTrace.md): the point of an exception.
