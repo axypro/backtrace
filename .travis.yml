@@ -7,14 +7,14 @@ matrix:
     - php: 5.5
     - php: 5.6
     - php: 7.0
+      env: NOXDEBUG=yes
     - php: hhvm
 
 sudo: false
 
 before_install:
   - composer self-update
-  - phpenv config-rm xdebug.ini
-  - alias phpX='php -dzend_extension=xdebug.so'
+  - if [ ! "$NOXDEBUG" = "yes"]; then phpenv config-rm xdebug.ini; fi;
 
 install:
   - composer install
@@ -24,7 +24,7 @@ install:
 script:
   - if [ ! "$CHECKS" = "yes" ]; then phpunit; fi;
   - if [ "$CHECKS" = "yes" ]; then mkdir -p build/logs; fi;
-  - if [ "$CHECKS" = "yes" ]; then phpX $(which phpunit) --coverage-clover build/logs/clover.xml; fi;
+  - if [ "$CHECKS" = "yes" ]; then php -dzend_extension=xdebug.so $(which phpunit) --coverage-clover build/logs/clover.xml; fi;
   - if [ "$CHECKS" = "yes" ]; then php vendor/bin/phpcs --standard=PSR2 --encoding=utf-8 --ignore=vendor .; fi;
 
 after_success:
