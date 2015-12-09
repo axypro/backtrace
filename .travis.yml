@@ -13,28 +13,16 @@ matrix:
 sudo: false
 
 before_install:
-  - if [ ! "$NOXDEBUG" = "yes" ]; then phpenv config-rm xdebug.ini; fi;
-  - composer self-update
+  - source travis/before_install.sh
 
 install:
-  - composer install
-  - if [ "$CHECKS" = "yes" ]; then composer require satooshi/php-coveralls --dev; fi;
-  - if [ "$CHECKS" = "yes" ]; then composer require squizlabs/php_codesniffer="~2.3" --dev; fi;
+  - if [ "$CHECKS" = "yes" ]; then source travis/install_normal.sh; else travis/install_checks.sh; fi;
 
 script:
-  - if [ ! "$CHECKS" = "yes" ]; then phpunit; fi;
-  - if [ "$CHECKS" = "yes" ]; then php vendor/bin/phpcs --standard=PSR2 --encoding=utf-8 --ignore=vendor .; fi;
-  - >
-    if [ "$CHECKS" = "yes" ]; then
-      echo "zend_extension=xdebug.so" > build/xdebug.ini &&
-      mkdir -p build/logs; &&
-      phpenv config-add build/xdebug.ini &&
-      phpunit --coverage-clover build/logs/clover.xml;
-    fi;
-  - if [ "$CHECKS" = "yes" ]; then ; fi;
+  - if [ "$CHECKS" = "yes" ]; then source travis/script_normal.sh; else travis/script_checks.sh; fi;
 
 after_success:
-  - if [ "$CHECKS" = "yes" ]; then php vendor/bin/coveralls -c .coveralls.yml; fi;
+  - if [ "$CHECKS" = "yes" ]; then php vendor/bin/coveralls -c travis/.coveralls.yml; fi;
 
 notifications:
   email:
