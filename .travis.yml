@@ -23,10 +23,15 @@ install:
 
 script:
   - if [ ! "$CHECKS" = "yes" ]; then phpunit; fi;
-  - if [ "$CHECKS" = "yes" ]; then mkdir -p build/logs; fi;
   - if [ "$CHECKS" = "yes" ]; then php vendor/bin/phpcs --standard=PSR2 --encoding=utf-8 --ignore=vendor .; fi;
-  - if [ "$CHECKS" = "yes" ]; then phpenv config-add xdebug.ini; fi;
-  - if [ "$CHECKS" = "yes" ]; then phpunit --coverage-clover build/logs/clover.xml; fi;
+  - >
+    if [ "$CHECKS" = "yes" ]; then
+      echo "zend_extension=xdebug.so" > build/xdebug.ini &&
+      mkdir -p build/logs; &&
+      phpenv config-add build/xdebug.ini &&
+      phpunit --coverage-clover build/logs/clover.xml;
+    fi;
+  - if [ "$CHECKS" = "yes" ]; then ; fi;
 
 after_success:
   - if [ "$CHECKS" = "yes" ]; then php vendor/bin/coveralls -c .coveralls.yml; fi;
