@@ -1,6 +1,7 @@
 ### dev-master
 
 * Refactoring README
+* Refactoring Travis
 
 ### 1.0.5 (05.12.2015)
 
