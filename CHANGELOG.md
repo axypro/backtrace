@@ -1,3 +1,7 @@
+### 1.0.7 (02.02.2019) (Last of PHP5, branch `php5`)
+
+* Fix travis for phpunit and old versions PHP
+
 ### 1.0.6 (02.02.2019) (Last of PHP5)
 
 * Refactoring README
