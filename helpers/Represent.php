@@ -4,6 +4,8 @@
  * @author Oleg Grigoriev <go.vasac@gmail.com>
  */
 
+declare(strict_types=1);
+
 namespace axy\backtrace\helpers;
 
 /**
@@ -18,7 +20,7 @@ class Represent
      *
      * @var int
      */
-    const MAX_LEN = 15;
+    private const MAX_LEN = 15;
 
     /**
      * Represents an argument of a method as a string
@@ -26,7 +28,7 @@ class Represent
      * @param mixed $value
      * @return string
      */
-    public static function arg($value)
+    public static function arg($value): string
     {
         switch (gettype($value)) {
             case 'NULL':
@@ -50,7 +52,7 @@ class Represent
      * @param array $item
      * @return string
      */
-    public static function method(array $item)
+    public static function method(array $item): string
     {
         if (empty($item['function'])) {
             return '';
@@ -76,7 +78,7 @@ class Represent
      * @param array $item
      * @return string
      */
-    public static function point(array $item)
+    public static function point(array $item): string
     {
         if (empty($item['file'])) {
             $result = '[internal function]';
@@ -98,7 +100,7 @@ class Represent
      *        a number of the item in the trace
      * @return string
      */
-    public static function item(array $item, $number = null)
+    public static function item(array $item, ?int $number = null): string
     {
         if ($number !== null) {
             $number = '#'.$number.' ';
@@ -115,7 +117,7 @@ class Represent
      *        a line separator
      * @return string
      */
-    public static function trace(array $items, $sep = PHP_EOL)
+    public static function trace(array $items, string $sep = PHP_EOL): string
     {
         $lines = [];
         foreach ($items as $number => $item) {
@@ -131,7 +133,7 @@ class Represent
      * @param string $str
      * @return string
      */
-    private static function cutString($str)
+    private static function cutString(string $str): string
     {
         static $mb;
         if ($mb === null) {

@@ -4,6 +4,8 @@
  * @author Oleg Grigoriev <go.vasac@gmail.com>
  */
 
+declare(strict_types=1);
+
 namespace axy\backtrace;
 
 /**
@@ -31,7 +33,7 @@ class ExceptionTrace extends Trace
      * @param int $line [optional]
      *        a code line of the exception point
      */
-    public function __construct(array $items = null, $file = null, $line = null)
+    public function __construct(array $items = null, ?string $file = null, ?int $line = null)
     {
         if ($items === null) {
             $items = $this->loadCurrentPoint(debug_backtrace(), $file, $line);
@@ -55,7 +57,7 @@ class ExceptionTrace extends Trace
     /**
      * {@inheritdoc}
      */
-    public function trimFilename($prefix)
+    public function trimFilename(string $prefix): bool
     {
         $affected = parent::trimFilename($prefix);
         if (strpos($this->props['file'], $prefix) === 0) {
@@ -68,7 +70,7 @@ class ExceptionTrace extends Trace
     /**
      * {@inheritdoc}
      */
-    public function truncate(array $options)
+    public function truncate(array $options): bool
     {
         $result = parent::truncate($options);
         if (!$result) {
@@ -88,7 +90,7 @@ class ExceptionTrace extends Trace
      * @param int $line
      * @return array
      */
-    private function loadCurrentPoint($items, &$file, &$line)
+    private function loadCurrentPoint(array $items, ?string &$file, ?int &$line): array
     {
         $top = array_shift($items);
         if (($file === null) && (!empty($top['file']))) {
@@ -102,9 +104,9 @@ class ExceptionTrace extends Trace
 
     /**
      * @param array $options
-     * @return boolean
+     * @return bool
      */
-    private function defineFLForNoResult($options)
+    private function defineFLForNoResult(array $options): bool
     {
         if ((!empty($options['file'])) && ($options['file'] === $this->props['file'])) {
             return true;

@@ -1,3 +1,11 @@
+### dev-master
+
+* Use PHP 7.1 (type hinting, strict types and etc)
+
+
+
+## Version 1.x, Support PHP 5.4, branch `php5`
+
 ### 1.0.7 (02.02.2019) (Last of PHP5, branch `php5`)
 
 * Fix travis for phpunit and old versions PHP
