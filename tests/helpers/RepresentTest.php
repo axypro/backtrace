@@ -1,16 +1,18 @@
 <?php
 /**
  * @package axy\backtrace
+ * @author Oleg Grigoriev <go.vasac@gmail.com>
  */
 
 namespace axy\backtrace\tests\helpers;
 
+use PHPUnit\Framework\TestCase;
 use axy\backtrace\helpers\Represent;
 
 /**
  * coversDefaultClass axy\backtrace\helpers\Represent
  */
-class RepresentTest extends \PHPUnit_Framework_TestCase
+class RepresentTest extends TestCase
 {
     /**
      * covers ::arg
@@ -18,7 +20,7 @@ class RepresentTest extends \PHPUnit_Framework_TestCase
      * @param mixed $value
      * @param string $expected
      */
-    public function testArg($value, $expected)
+    public function testArg($value, string $expected): void
     {
         $this->assertSame($expected, Represent::arg($value));
     }
@@ -26,7 +28,7 @@ class RepresentTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function providerArg()
+    public function providerArg(): array
     {
         return [
             [null, 'NULL',],
@@ -50,7 +52,7 @@ class RepresentTest extends \PHPUnit_Framework_TestCase
      * @param array $item
      * @param string $expected
      */
-    public function testMethod(array $item, $expected)
+    public function testMethod(array $item, string $expected): void
     {
         $this->assertSame($expected, Represent::method($item));
     }
@@ -58,7 +60,7 @@ class RepresentTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function providerMethod()
+    public function providerMethod(): array
     {
         return [
             [
@@ -100,7 +102,7 @@ class RepresentTest extends \PHPUnit_Framework_TestCase
      * @param array $item
      * @param string $expected
      */
-    public function testPoint(array $item, $expected)
+    public function testPoint(array $item, string $expected): void
     {
         $this->assertSame($expected, Represent::point($item));
     }
@@ -108,7 +110,7 @@ class RepresentTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function providerPoint()
+    public function providerPoint(): array
     {
         return [
             [
@@ -139,7 +141,7 @@ class RepresentTest extends \PHPUnit_Framework_TestCase
      * @param int $number
      * @param string $expected
      */
-    public function testItem(array $item, $number, $expected)
+    public function testItem(array $item, int $number, string $expected): void
     {
         $this->assertSame($expected, Represent::item($item, $number));
     }
@@ -147,7 +149,7 @@ class RepresentTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function providerItem()
+    public function providerItem(): array
     {
         return [
             [
@@ -171,7 +173,7 @@ class RepresentTest extends \PHPUnit_Framework_TestCase
      * @param array $items
      * @param array $expectedLines
      */
-    public function testTrace(array $items, array $expectedLines)
+    public function testTrace(array $items, array $expectedLines): void
     {
         $expected = implode('-', $expectedLines).'-';
         $actual = Represent::trace($items, '-');
@@ -183,7 +185,7 @@ class RepresentTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function providerTrace()
+    public function providerTrace(): array
     {
         return [
             [

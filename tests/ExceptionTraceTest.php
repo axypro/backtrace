@@ -1,10 +1,12 @@
 <?php
 /**
  * @package axy\backtrace
+ * @author Oleg Grigoriev <go.vasac@gmail.com>
  */
 
 namespace axy\backtrace\tests;
 
+use PHPUnit\Framework\TestCase;
 use axy\backtrace\ExceptionTrace;
 use axy\backtrace\tests\hlp\GetExceptionTrace;
 
@@ -12,13 +14,13 @@ use axy\backtrace\tests\hlp\GetExceptionTrace;
  * coversDefaultClass axy\backtrace\ExceptionTrace
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
+class ExceptionTraceTest extends TestCase
 {
     /**
      * covers ::__construct
      * covers ::__get
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $items = [
             ['file' => 'index.php', 'line' => 10,],
@@ -37,7 +39,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
      * covers ::__construct
      * covers ::__get
      */
-    public function testConstructNull()
+    public function testConstructNull(): void
     {
         $t = new GetExceptionTrace();
         $trace = $t->trace;
@@ -51,7 +53,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
      * covers ::__construct
      * covers ::__get
      */
-    public function testConstructFileNull()
+    public function testConstructFileNull(): void
     {
         $items = [
             ['file' => 'file.php', 'line' => 10,],
@@ -66,7 +68,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
     /**
      * covers ::__isset
      */
-    public function testMagicIsset()
+    public function testMagicIsset(): void
     {
         $trace = new ExceptionTrace([]);
         $this->assertTrue(isset($trace->items));
@@ -78,7 +80,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
     /**
      * covers ::trimFilename
      */
-    public function testTrimFilename()
+    public function testTrimFilename(): void
     {
         $items = [
             ['file' => '/var/www/file.php', 'line' => 10,],
@@ -102,7 +104,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByNamespace
      */
-    public function testTruncateByNamespace()
+    public function testTruncateByNamespace(): void
     {
         $items = [
             ['file' => 'my/ns/Class.php', 'line' => 30, 'class' => 'my\ns\Second'],
@@ -127,7 +129,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByNamespace
      */
-    public function testTruncateByNamespaceTop()
+    public function testTruncateByNamespaceTop(): void
     {
         $items = [
             ['file' => 'func.php', 'line' => 20, 'class' => 'my\ns\Class'],
@@ -144,7 +146,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByNamespace
      */
-    public function testTruncateByNamespaceSkip()
+    public function testTruncateByNamespaceSkip(): void
     {
         $items = [
             ['file' => 'func.php', 'line' => 20, 'class' => 'my\ns\Class'],
@@ -161,7 +163,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByDir
      */
-    public function testTruncateByDirTop()
+    public function testTruncateByDirTop(): void
     {
         $items = [
             ['file' => 'func.php', 'line' => 20, 'class' => 'my\ns\Class'],
@@ -179,7 +181,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByDir
      */
-    public function testTruncateByDirSkip()
+    public function testTruncateByDirSkip(): void
     {
         $items = [
             ['file' => 'func.php', 'line' => 20, 'class' => 'my\ns\Class'],
@@ -196,7 +198,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByFile
      */
-    public function testTruncateByFile()
+    public function testTruncateByFile(): void
     {
         $items = [
             ['file' => 'func.php', 'line' => 20, 'class' => 'my\ns\Class'],
@@ -213,7 +215,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByFile
      */
-    public function testTruncateByFileTop()
+    public function testTruncateByFileTop(): void
     {
         $items = [
             ['file' => 'func.php', 'line' => 20, 'class' => 'my\ns\Class'],
@@ -230,7 +232,7 @@ class ExceptionTraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByFile
      */
-    public function testTruncateByFileSkip()
+    public function testTruncateByFileSkip(): void
     {
         $items = [
             ['file' => 'func.php', 'line' => 20, 'class' => 'my\ns\Class'],

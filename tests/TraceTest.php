@@ -1,23 +1,29 @@
 <?php
 /**
  * @package axy\backtrace
+ * @author Oleg Grigoriev <go.vasac@gmail.com>
  */
+
+declare(strict_types=1);
 
 namespace axy\backtrace\tests;
 
+use PHPUnit\Framework\TestCase;
+use LogicException;
+use OutOfRangeException;
 use axy\backtrace\Trace;
 
 /**
  * coversDefaultClass axy\backtrace\Trace
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class TraceTest extends \PHPUnit_Framework_TestCase
+class TraceTest extends TestCase
 {
     /**
      * covers ::__construct
      * covers ::__get
      */
-    public function testConstructByArray()
+    public function testConstructByArray(): void
     {
         $items = [
             ['file' => '/test/index.php',],
@@ -32,21 +38,21 @@ class TraceTest extends \PHPUnit_Framework_TestCase
      * covers ::__construct
      * covers ::__get
      */
-    public function testConstructByNull()
+    public function testConstructByNull(): void
     {
         $trace = new Trace();
         $current = debug_backtrace();
         $this->assertCount(count($current), $trace->items);
         $this->assertEquals($current[0], $trace->items[0]);
         $this->assertEquals($trace->items, $trace->originalItems);
-        $this->setExpectedException('LogicException');
-        return $trace->__get('unknown');
+        $this->expectException('LogicException');
+        $trace->__get('unknown');
     }
 
     /**
      * covers ::normalize
      */
-    public function testNormalize()
+    public function testNormalize(): void
     {
         $items = [
             ['function' => 'preg_replace_callback',],
@@ -81,7 +87,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     /**
      * covers ::truncateByLimit
      */
-    public function testTruncateByLimit()
+    public function testTruncateByLimit(): void
     {
         $items = [
             ['function' => 'preg_replace_callback',],
@@ -112,7 +118,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     /**
      * covers ::trimFilename
      */
-    public function testTrimFilename()
+    public function testTrimFilename(): void
     {
         $items = [
             ['file' => '/var/www/file.php', 'line' => 10,],
@@ -138,7 +144,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByFilter
      */
-    public function testTruncateByFilterLeft()
+    public function testTruncateByFilterLeft(): void
     {
         $trace = $this->getTraceForTruncate();
         $filter = function (array $item) {
@@ -165,7 +171,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByFilter
      */
-    public function testTruncateByFilterLeave()
+    public function testTruncateByFilterLeave(): void
     {
         $trace = $this->getTraceForTruncate();
         $filter = function (array $item) {
@@ -197,7 +203,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByFilter
      */
-    public function testTruncateByFilterLeaveTop()
+    public function testTruncateByFilterLeaveTop(): void
     {
         $trace = $this->getTraceForTruncate();
         $filter = function (array $item) {
@@ -214,7 +220,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByFilter
      */
-    public function testTruncateByFilterSkip()
+    public function testTruncateByFilterSkip(): void
     {
         $trace = $this->getTraceForTruncate();
         $filter = function () {
@@ -228,7 +234,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByNamespace
      */
-    public function testTruncateByNamespace()
+    public function testTruncateByNamespace(): void
     {
         $trace = $this->getTraceForTruncate();
         $this->assertFalse($trace->truncateByNamespace('go\Unk'));
@@ -268,7 +274,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByClass
      */
-    public function testTruncateByClass()
+    public function testTruncateByClass(): void
     {
         $trace = $this->getTraceForTruncate();
         $this->assertTrue($trace->truncateByClass('go\DB\DB'));
@@ -304,7 +310,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByFile
      */
-    public function testTruncateByFile()
+    public function testTruncateByFile(): void
     {
         $trace = $this->getTraceForTruncate();
         $this->assertTrue($trace->truncateByFile('/test/TestClass.php'));
@@ -328,7 +334,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
      * covers ::truncate
      * covers ::truncateByDir
      */
-    public function testTruncateByDir()
+    public function testTruncateByDir(): void
     {
         $trace = $this->getTraceForTruncate();
         $this->assertTrue($trace->truncateByDir('/test/go/DB'));
@@ -363,7 +369,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     /**
      * covers ::__isset
      */
-    public function testMagicIsset()
+    public function testMagicIsset(): void
     {
         $trace = new Trace([]);
         $this->assertTrue(isset($trace->items));
@@ -372,28 +378,28 @@ class TraceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * covers ::__set
-     * @expectedException \LogicException
      */
-    public function testMagicSetForbidden()
+    public function testMagicSetForbidden(): void
     {
         $trace = new Trace([]);
+        $this->expectException(LogicException::class);
         $trace->__set('items', []);
     }
 
     /**
      * covers ::__unset
-     * @expectedException \LogicException
      */
-    public function testMagicUnsetForbidden()
+    public function testMagicUnsetForbidden(): void
     {
         $trace = new Trace([]);
+        $this->expectException(LogicException::class);
         unset($trace->items);
     }
 
     /**
      * covers ::count
      */
-    public function testCountable()
+    public function testCountable(): void
     {
         $items = [
             ['file' => 'one.php'],
@@ -409,7 +415,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
     /**
      * covers ::getIterator
      */
-    public function testTraversable()
+    public function testTraversable(): void
     {
         $items = [
             ['file' => 'one.php'],
@@ -424,7 +430,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
      * covers ::offsetExists
      * covers ::offsetGet
      */
-    public function testArrayAccess()
+    public function testArrayAccess(): void
     {
         $items = [
             ['file' => 'one.php'],
@@ -436,14 +442,14 @@ class TraceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['file' => 'three.php'], $trace[2]);
         $this->assertTrue(isset($trace[1]));
         $this->assertFalse(isset($trace[10]));
-        $this->setExpectedException('OutOfRangeException');
-        return $trace[10];
+        $this->expectException(OutOfRangeException::class);
+        $x = $trace[10];
     }
 
     /**
      * covers ::__toString
      */
-    public function testToString()
+    public function testToString(): void
     {
         $items = [
             ['function' => 'preg_replace_callback'],
@@ -458,28 +464,28 @@ class TraceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * covers ::offsetSet
-     * @expectedException \LogicException
      */
-    public function testOffsetSet()
+    public function testOffsetSet(): void
     {
         $trace = new Trace();
+        $this->expectException(LogicException::class);
         $trace[1] = 5;
     }
 
     /**
      * covers ::offsetUnset
-     * @expectedException \LogicException
      */
-    public function testOffsetUnset()
+    public function testOffsetUnset(): void
     {
         $trace = new Trace();
+        $this->expectException(LogicException::class);
         unset($trace[1]);
     }
 
     /**
-     * @return \axy\backtrace\Trace
+     * @return Trace
      */
-    private function getTraceForTruncate()
+    private function getTraceForTruncate(): Trace
     {
         if (!$this->itemsForTruncate) {
             $this->itemsForTruncate = include(__DIR__.'/traceForTruncate.php');

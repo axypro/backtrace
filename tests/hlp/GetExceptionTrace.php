@@ -1,10 +1,18 @@
 <?php
-/* Separate method, because test*() methods invoked via Reflection */
+/**
+ * @package axy\backtrace
+ * @author Oleg Grigoriev <go.vasac@gmail.com>
+ */
+
+declare(strict_types=1);
 
 namespace axy\backtrace\tests\hlp;
 
 use axy\backtrace\ExceptionTrace;
 
+/**
+ * Separate method, because test*() methods invoked via Reflection
+ */
 class GetExceptionTrace
 {
     /**
@@ -23,7 +31,7 @@ class GetExceptionTrace
     public $file;
 
     /**
-     * @var \axy\backtrace\ExceptionTrace
+     * @var ExceptionTrace
      */
     public $trace;
 
