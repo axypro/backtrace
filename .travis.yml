@@ -44,11 +44,7 @@ install:
   - >
     if [ "$CHECKS" = "yes" ]; then
         echo "json_path: coveralls-upload.json" >> .coveralls.yml &&
-        echo "coverage_clover: clover.xml" >> .coveralls.yml &&
-        echo ".coveralls.yml:" &&
-        cat .coveralls.yml &&
-        echo "vendor/bin:" &&
-        ls -la ./vendor/bin;
+        echo "coverage_clover: clover.xml" >> .coveralls.yml
     fi;
 
 script:
