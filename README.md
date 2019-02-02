@@ -10,7 +10,16 @@ Backtrace helper library (PHP).
 
 * The library does not require any dependencies.
 * Install: `composer require axy/backtrace`.
+* Tested for PHP 7.1, 7.2, 7.3
 * License: [MIT](LICENSE).
+
+### Legacy (PHP5.4+, branch php5)
+
+[![Latest Stable Version](https://img.shields.io/packagist/v/axy/backtrace.svg?style=flat-square)](https://packagist.org/packages/axy/backtrace)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.4-8892BF.svg?style=flat-square)](https://php.net/)
+[![Build Status](https://img.shields.io/travis/axypro/backtrace/php5.svg?style=flat-square)](https://travis-ci.org/axypro/backtrace)
+
+* Install: `composer require axy/backtrace=^1`
 
 ### Documentation
 
