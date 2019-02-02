@@ -37,9 +37,6 @@ before_install:
 install:
   # Composer can not used dist (github required the auth token). Just specify prefer-source.
   - composer install --prefer-source
-  # In order not to litter in the local dev-version specify checks-packages here instead composer.json
-  - if [ "$PU4" = "yes" ]; then PU_VER="^4"; else PU_VER="^5.6"; fi;
-  - composer require phpunit/phpunit=$PU_VER --prefer-source
   - PU="php vendor/bin/phpunit"
   - CS="php vendor/bin/phpcs"
   - if [ "$CHECKS" = "yes" ]; then composer require php-coveralls/php-coveralls --dev --prefer-source; fi;
