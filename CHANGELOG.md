@@ -1,4 +1,4 @@
-### dev-master
+### 1.0.6 (02.02.2019) (Last of PHP5)
 
 * Refactoring README
 * Refactoring Travis
