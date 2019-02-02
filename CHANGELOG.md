@@ -1,7 +1,7 @@
 ### dev-master
 
 * Use PHP 7.1 (type hinting, strict types and etc)
-
+* Move classes to `src` dir
 
 
 ## Version 1.x, Support PHP 5.4, branch `php5`

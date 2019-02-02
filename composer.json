@@ -21,7 +21,8 @@
     },
     "autoload": {
         "psr-4": {
-            "axy\\backtrace\\": ""
+            "axy\\backtrace\\": "src",
+            "axy\\backtrace\\tests\\": "tests"
         }
     },
     "archive": {
