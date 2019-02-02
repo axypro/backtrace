@@ -9,6 +9,7 @@
          processIsolation="false"
          stopOnFailure="false"
          bootstrap="tests/bootstrap.php"
+         cacheResult="false"
 >
     <testsuites>
         <testsuite name="Base Test Suite">

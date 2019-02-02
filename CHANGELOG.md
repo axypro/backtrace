@@ -2,6 +2,8 @@
 
 * Use PHP 7.1 (type hinting, strict types and etc)
 * Move classes to `src` dir
+* Use phpunit 8.0
+* Install dev-tools (phpunit, phpcs, phpmd) locally
 
 
 ## Version 1.x, Support PHP 5.4, branch `php5`

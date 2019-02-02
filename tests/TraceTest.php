@@ -443,7 +443,7 @@ class TraceTest extends TestCase
         $this->assertTrue(isset($trace[1]));
         $this->assertFalse(isset($trace[10]));
         $this->expectException(OutOfRangeException::class);
-        $x = $trace[10];
+        $trace[10];
     }
 
     /**

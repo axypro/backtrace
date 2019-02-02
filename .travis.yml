@@ -41,20 +41,24 @@ install:
   - if [ "$PU4" = "yes" ]; then PU_VER="^4"; else PU_VER="^5.6"; fi;
   - composer require phpunit/phpunit=$PU_VER --prefer-source
   - PU="php vendor/bin/phpunit"
-  #- if [ "$CHECKS" = "yes" ]; then composer require squizlabs/php_codesniffer="~2.3" --prefer-source; fi;
-  - if [ "$CHECKS" = "yes" ]; then composer require satooshi/php-coveralls --dev --prefer-source; fi;
+  - CS="php vendor/bin/phpcs"
+  - if [ "$CHECKS" = "yes" ]; then composer require php-coveralls/php-coveralls --dev --prefer-source; fi;
   # Generate the coveralls config (not to keep it in the repo)
   - >
     if [ "$CHECKS" = "yes" ]; then
         echo "json_path: coveralls-upload.json" >> .coveralls.yml &&
-        echo "coverage_clover: clover.xml" >> .coveralls.yml;
+        echo "coverage_clover: clover.xml" >> .coveralls.yml &&
+        echo ".coveralls.yml:" &&
+        cat .coveralls.yml &&
+        echo "vendor/bin:" &&
+        ls -la ./vendor/bin;
     fi;
 
 script:
   # Normal run - only phpunit
   - if [ ! "$CHECKS" = "yes" ]; then $PU; fi;
   # Run with checks
-  #- if [ "$CHECKS" = "yes" ]; then php vendor/bin/phpcs --standard=PSR2 --encoding=utf-8 --ignore=vendor .; fi;
+  - if [ "$CHECKS" = "yes" ]; then $CS; fi;
   # Enable xdebug for coverage
   - if [ "$CHECKS" = "yes" ] && [ "$XDEBUG_ENABLED" = "yes" ]; then phpenv config-add xdebug.ini; fi;
   - if [ "$CHECKS" = "yes" ]; then $PU --coverage-clover clover.xml; fi;
