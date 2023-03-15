@@ -1,8 +1,4 @@
 <?php
-/**
- * @package axy\backtrace
- * @author Oleg Grigoriev <go.vasac@gmail.com>
- */
 
 namespace axy\backtrace\tests;
 
@@ -42,6 +38,7 @@ class ExceptionTraceTest extends TestCase
     public function testConstructNull(): void
     {
         $t = new GetExceptionTrace();
+        $this->assertTrue(true);
         $trace = $t->trace;
         $this->assertCount(count($t->native), $trace->items);
         $this->assertEquals($t->native[0], $trace->items[0]);

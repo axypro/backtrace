@@ -1,8 +1,4 @@
 <?php
-/**
- * @package axy\backtrace
- * @author Oleg Grigoriev <go.vasac@gmail.com>
- */
 
 declare(strict_types=1);
 
@@ -26,14 +22,14 @@ class ExceptionTrace extends Trace
     /**
      * The constructor
      *
-     * @param mixed $items [optional]
+     * @param ?array $items [optional]
      *        a trace array or NULL (for the current trace)
-     * @param string $file [optional]
+     * @param ?string $file [optional]
      *        a filename of the exception point
-     * @param int $line [optional]
+     * @param ?int $line [optional]
      *        a code line of the exception point
      */
-    public function __construct(array $items = null, ?string $file = null, ?int $line = null)
+    public function __construct(?array $items = null, ?string $file = null, ?int $line = null)
     {
         if ($items === null) {
             $items = $this->loadCurrentPoint(debug_backtrace(), $file, $line);
@@ -54,22 +50,16 @@ class ExceptionTrace extends Trace
         $this->props = array_replace($this->props, $nProps);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function trimFilename(string $prefix): bool
     {
         $affected = parent::trimFilename($prefix);
-        if (strpos($this->props['file'], $prefix) === 0) {
+        if (str_starts_with($this->props['file'], $prefix)) {
             $this->props['file'] = substr($this->props['file'], strlen($prefix));
             $affected = true;
         }
         return $affected;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function truncate(array $options): bool
     {
         $result = parent::truncate($options);
@@ -84,12 +74,6 @@ class ExceptionTrace extends Trace
         return $result;
     }
 
-    /**
-     * @param array $items
-     * @param string $file
-     * @param int $line
-     * @return array
-     */
     private function loadCurrentPoint(array $items, ?string &$file, ?int &$line): array
     {
         $top = array_shift($items);
@@ -102,16 +86,12 @@ class ExceptionTrace extends Trace
         return $items;
     }
 
-    /**
-     * @param array $options
-     * @return bool
-     */
     private function defineFLForNoResult(array $options): bool
     {
         if ((!empty($options['file'])) && ($options['file'] === $this->props['file'])) {
             return true;
         }
-        if ((!empty($options['dir'])) && (strpos($this->props['file'], $options['dir']) === 0)) {
+        if ((!empty($options['dir'])) && (str_starts_with($this->props['file'], $options['dir']))) {
             return true;
         }
         return false;

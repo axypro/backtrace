@@ -1,8 +1,4 @@
 <?php
-/**
- * @package axy\backtrace
- * @author Oleg Grigoriev <go.vasac@gmail.com>
- */
 
 namespace axy\backtrace\tests\helpers;
 
@@ -14,21 +10,13 @@ use axy\backtrace\helpers\Represent;
  */
 class RepresentTest extends TestCase
 {
-    /**
-     * covers ::arg
-     * @dataProvider providerArg
-     * @param mixed $value
-     * @param string $expected
-     */
-    public function testArg($value, string $expected): void
+    /** @dataProvider providerArg */
+    public function testArg(mixed $value, string $expected): void
     {
         $this->assertSame($expected, Represent::arg($value));
     }
 
-    /**
-     * @return array
-     */
-    public function providerArg(): array
+    public static function providerArg(): array
     {
         return [
             [null, 'NULL',],
@@ -42,25 +30,16 @@ class RepresentTest extends TestCase
             ['длинная строка в utf-8', "'длинная строка ...'"],
             [[1, 2, 3], 'Array'],
             [(object)[1, 2, 3], 'Object(stdClass)'],
-            [$this, 'Object(axy\backtrace\tests\helpers\RepresentTest)'],
         ];
     }
 
-    /**
-     * covers ::method
-     * @dataProvider providerMethod
-     * @param array $item
-     * @param string $expected
-     */
+    /** @dataProvider providerMethod */
     public function testMethod(array $item, string $expected): void
     {
         $this->assertSame($expected, Represent::method($item));
     }
 
-    /**
-     * @return array
-     */
-    public function providerMethod(): array
+    public static function providerMethod(): array
     {
         return [
             [
@@ -96,21 +75,13 @@ class RepresentTest extends TestCase
         ];
     }
 
-    /**
-     * covers ::point
-     * @dataProvider providerPoint
-     * @param array $item
-     * @param string $expected
-     */
+    /** @dataProvider providerPoint */
     public function testPoint(array $item, string $expected): void
     {
         $this->assertSame($expected, Represent::point($item));
     }
 
-    /**
-     * @return array
-     */
-    public function providerPoint(): array
+    public static function providerPoint(): array
     {
         return [
             [
@@ -134,22 +105,13 @@ class RepresentTest extends TestCase
         ];
     }
 
-    /**
-     * covers ::item
-     * @dataProvider providerItem
-     * @param array $item
-     * @param int $number
-     * @param string $expected
-     */
+    /** @dataProvider providerItem */
     public function testItem(array $item, int $number, string $expected): void
     {
         $this->assertSame($expected, Represent::item($item, $number));
     }
 
-    /**
-     * @return array
-     */
-    public function providerItem(): array
+    public static function providerItem(): array
     {
         return [
             [
@@ -167,25 +129,17 @@ class RepresentTest extends TestCase
         ];
     }
 
-    /**
-     * covers ::trace
-     * @dataProvider providerTrace
-     * @param array $items
-     * @param array $expectedLines
-     */
+    /** @dataProvider providerTrace */
     public function testTrace(array $items, array $expectedLines): void
     {
-        $expected = implode('-', $expectedLines).'-';
+        $expected = implode('-', $expectedLines) . '-';
         $actual = Represent::trace($items, '-');
-        /* In HHVM Obhect(Closure) has extended representation */
+        /* In HHVM Object(Closure) has extended representation */
         $actual = preg_replace('/Object\(Closure[^)]*\)/', 'Object(Closure)', $actual);
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @return array
-     */
-    public function providerTrace(): array
+    public static function providerTrace(): array
     {
         return [
             [

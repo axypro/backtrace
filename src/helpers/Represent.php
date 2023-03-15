@@ -1,8 +1,4 @@
 <?php
-/**
- * @package axy\backtrace
- * @author Oleg Grigoriev <go.vasac@gmail.com>
- */
 
 declare(strict_types=1);
 
@@ -15,43 +11,23 @@ namespace axy\backtrace\helpers;
  */
 class Represent
 {
-    /**
-     * The maximum length of a method argument
-     *
-     * @var int
-     */
+    /** The maximum length of a method argument */
     private const MAX_LEN = 15;
 
-    /**
-     * Represents an argument of a method as a string
-     *
-     * @param mixed $value
-     * @return string
-     */
-    public static function arg($value): string
+    /** Represents an argument of a method as a string */
+    public static function arg(mixed $value): string
     {
-        switch (gettype($value)) {
-            case 'NULL':
-                return 'NULL';
-            case 'boolean':
-                return $value ? 'true' : 'false';
-            case 'array':
-                return 'Array';
-            case 'object':
-                return 'Object('.get_class($value).')';
-            case 'string':
-                return "'".self::cutString((string)$value)."'";
-            default:
-                return (string)$value;
-        }
+        return match (gettype($value)) {
+            'NULL' => 'NULL',
+            'boolean' => $value ? 'true' : 'false',
+            'array' => 'Array',
+            'object' => 'Object(' . get_class($value) . ')',
+            'string' => "'" . self::cutString((string)$value) . "'",
+            default => (string)$value,
+        };
     }
 
-    /**
-     * Represents a method call as a string
-     *
-     * @param array $item
-     * @return string
-     */
+    /** Represents a method call as a string */
     public static function method(array $item): string
     {
         if (empty($item['function'])) {
@@ -60,24 +36,19 @@ class Represent
         $method = $item['function'];
         if (!empty($item['class'])) {
             $type = (empty($item['type']) ? '->' : $item['type']);
-            $class = $item['class'].$type;
+            $class = $item['class'] . $type;
         } else {
             $class = '';
         }
-        $args = isset($item['args']) ? $item['args'] : [];
+        $args = $item['args'] ?? [];
         foreach ($args as &$arg) {
             $arg = self::arg($arg);
         }
         unset($arg);
-        return $class.$method.'('.implode(', ', $args).')';
+        return $class . $method . '(' . implode(', ', $args) . ')';
     }
 
-    /**
-     * Represents a call point as a string
-     *
-     * @param array $item
-     * @return string
-     */
+    /** Represents a call point as a string */
     public static function point(array $item): string
     {
         if (empty($item['file'])) {
@@ -85,7 +56,7 @@ class Represent
         } else {
             $result = $item['file'];
             if (!empty($item['line'])) {
-                $result .= '('.$item['line'].')';
+                $result .= "({$item['line']})";
             }
         }
         return $result;
@@ -96,16 +67,16 @@ class Represent
      *
      * @param array $item
      *        a backtrace item
-     * @param int $number [optional]
+     * @param ?int $number [optional]
      *        a number of the item in the trace
      * @return string
      */
     public static function item(array $item, ?int $number = null): string
     {
         if ($number !== null) {
-            $number = '#'.$number.' ';
+            $number = "#$number ";
         }
-        return $number.self::point($item).': '.self::method($item);
+        return $number . self::point($item) . ': ' . self::method($item);
     }
 
     /**
@@ -123,8 +94,8 @@ class Represent
         foreach ($items as $number => $item) {
             $lines[] = self::item($item, $number);
         }
-        $lines[] = '#'.(count($items)).' {main}';
-        return implode($sep, $lines).$sep;
+        $lines[] = '#' . (count($items)) . ' {main}';
+        return implode($sep, $lines) . $sep;
     }
 
     /**
@@ -146,9 +117,9 @@ class Represent
         }
         if ($len > self::MAX_LEN) {
             if ($mb) {
-                return mb_substr($str, 0, self::MAX_LEN, 'UTF-8').'...';
+                return mb_substr($str, 0, self::MAX_LEN, 'UTF-8') . '...';
             } else {
-                return substr($str, 0, self::MAX_LEN).'...';
+                return substr($str, 0, self::MAX_LEN) . '...';
             }
         }
         return $str;

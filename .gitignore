@@ -1,6 +1,7 @@
-composer.lock
-vendor
-.idea
-phpunit.xml
-phpmd.xml
+/vendor
+/composer.lock
+/phpunit.xml
+/.idea
 .phpunit.result.cache
+/local
+/format.json

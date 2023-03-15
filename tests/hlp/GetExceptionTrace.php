@@ -1,8 +1,4 @@
 <?php
-/**
- * @package axy\backtrace
- * @author Oleg Grigoriev <go.vasac@gmail.com>
- */
 
 declare(strict_types=1);
 
@@ -15,25 +11,10 @@ use axy\backtrace\ExceptionTrace;
  */
 class GetExceptionTrace
 {
-    /**
-     * @var array
-     */
-    public $native;
-
-    /**
-     * @var int
-     */
-    public $line;
-
-    /**
-     * @var string
-     */
-    public $file;
-
-    /**
-     * @var ExceptionTrace
-     */
-    public $trace;
+    public array $native;
+    public int $line;
+    public string $file;
+    public ExceptionTrace $trace;
 
     public function __construct()
     {

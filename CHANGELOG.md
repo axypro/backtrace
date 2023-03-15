@@ -1,3 +1,9 @@
+### dev
+
+* Use PHP 8.0
+* Code refactoring
+* GitHub Actions instead Travis
+
 ### 2.0.0 (02.02.2019)
 
 * Use PHP 7.1 (type hinting, strict types and etc)
