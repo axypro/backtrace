@@ -1,4 +1,4 @@
-### dev
+### 3.0.0 (15.03.2023)
 
 * Use PHP 8.1
 * Code refactoring
