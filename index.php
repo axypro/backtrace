@@ -8,7 +8,7 @@
  * @link https://github.com/axypro/backtrace repository
  * @link https://github.com/axypro/backtrace/blob/master/README.md documentation
  * @link https://packagist.org/packages/axy/backtrace composer
- * @uses PHP8.0+
+ * @uses PHP8.1+
  */
 
 declare(strict_types=1);

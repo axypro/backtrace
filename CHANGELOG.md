@@ -1,6 +1,6 @@
 ### dev
 
-* Use PHP 8.0
+* Use PHP 8.1
 * Code refactoring
 * GitHub Actions instead Travis
 
