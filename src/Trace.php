@@ -240,7 +240,7 @@ class Trace implements Countable, IteratorAggregate, ArrayAccess
     /**
      * {@inheritdoc}
      */
-    final public function offsetExists($offset)
+    final public function offsetExists(mixed $offset): bool
     {
         return isset($this->props['items'][$offset]);
     }
@@ -249,7 +249,7 @@ class Trace implements Countable, IteratorAggregate, ArrayAccess
      * {@inheritdoc}
      * @throws OutOfRangeException
      */
-    final public function offsetGet($offset)
+    final public function offsetGet(mixed $offset): mixed
     {
         if (!isset($this->props['items'][$offset])) {
             throw new OutOfRangeException("Trace[$offset] is not found");
@@ -262,7 +262,7 @@ class Trace implements Countable, IteratorAggregate, ArrayAccess
      * Forbidden
      * @throws LogicException
      */
-    final public function offsetSet($offset, $value)
+    final public function offsetSet(mixed $offset, mixed $value): void
     {
         throw new LogicException('Trace is read-only');
     }
@@ -272,7 +272,7 @@ class Trace implements Countable, IteratorAggregate, ArrayAccess
      * Forbidden
      * @throws LogicException
      */
-    final public function offsetUnset($offset)
+    final public function offsetUnset(mixed $offset): void
     {
         throw new LogicException('Trace is read-only');
     }

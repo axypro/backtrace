@@ -1,3 +1,8 @@
+### dev-master
+
+* example.sh
+* Fix deprecations
+
 ### 3.0.0 (15.03.2023)
 
 * Use PHP 8.1
