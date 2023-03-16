@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace axy\backtrace\tests;
 
-use PHPUnit\Framework\TestCase;
 use LogicException;
 use OutOfRangeException;
 use axy\backtrace\Trace;
@@ -13,7 +12,7 @@ use axy\backtrace\Trace;
  * coversDefaultClass axy\backtrace\Trace
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class TraceTest extends TestCase
+class TraceTest extends BaseTestCase
 {
     /**
      * covers ::__construct

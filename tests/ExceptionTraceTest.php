@@ -2,7 +2,6 @@
 
 namespace axy\backtrace\tests;
 
-use PHPUnit\Framework\TestCase;
 use axy\backtrace\ExceptionTrace;
 use axy\backtrace\tests\hlp\GetExceptionTrace;
 
@@ -10,7 +9,7 @@ use axy\backtrace\tests\hlp\GetExceptionTrace;
  * coversDefaultClass axy\backtrace\ExceptionTrace
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class ExceptionTraceTest extends TestCase
+class ExceptionTraceTest extends BaseTestCase
 {
     /**
      * covers ::__construct
