@@ -13,7 +13,7 @@ services:
             - '../local:/app/local'
         tmpfs:
             - '/.composer:uid=${USER_ID:-0}'
-            - '/app/local/tpm:uid=${USER_ID:-0}'
+            - '/app/local/tmp:uid=${USER_ID:-0}'
         user: "${USER_ID:-0}:${GROUP_ID:-0}"
         working_dir: '/app'
         environment:
