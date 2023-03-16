@@ -1,3 +1,7 @@
+### dev
+
+* Docker: install unzip for composer
+
 ### 3.0.1 (16.03.2023)
 
 * example.sh
