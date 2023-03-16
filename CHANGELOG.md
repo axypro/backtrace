@@ -1,4 +1,4 @@
-### dev-master
+### 3.0.1 (16.03.2023)
 
 * example.sh
 * Fix deprecations
